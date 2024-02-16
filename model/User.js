@@ -5,6 +5,7 @@ const Schema = mongoose.Schema({
     email: String,
     password: String,
     dob: Date,
+    verified: Boolean
 
 })
 
