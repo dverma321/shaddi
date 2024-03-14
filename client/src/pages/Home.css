@@ -1,0 +1,92 @@
+/* Add this to your CSS file or style section */
+
+.position-relative {
+  position: relative;
+}
+
+.overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+}
+
+.overlay-text h1 {
+  font-size: 3rem;
+  /* Adjust font size for smaller screens */
+  white-space: nowrap;
+  /* Prevent line breaks */
+}
+
+.overlay-text p {
+  font-size: 24px;
+  /* Adjust font size for smaller screens */
+  white-space: nowrap;
+  /* Prevent line breaks */
+}
+
+.footer {
+  background: linear-gradient(to bottom right, red, white);
+  /* Adjust the gradient direction as needed */
+  color: white;
+  padding: 20px 0;
+  /* Add padding to the footer content */
+  text-align: center;
+}
+
+
+
+/* Responsive Styles */
+
+@media (max-width: 768px) {
+  .overlay-text {
+    font-size: 18px;
+    /* Adjust font size for smaller screens */
+    margin-top: 10%;
+    /* Increase top margin */
+  }
+
+  .overlay-text h1 {
+    font-size: 14px;
+    /* Adjust font size for smaller screens */
+
+  }
+
+  .overlay-text p {
+    font-size: 18px;
+    /* Adjust font size for smaller screens */
+
+  }
+
+  .footer {
+    margin-top: 10%;
+  }
+}
+
+@media (max-width: 576px) {
+  .overlay-text {
+    font-size: 14px;
+    /* Further reduce font size for smaller screens */
+    margin-top: 1%;
+    /* Increase top margin even more */
+  }
+
+  .overlay-text h1 {
+    font-size: 18px;
+    /* Adjust font size for smaller screens */
+
+  }
+
+  .overlay-text p {
+    font-size: 18px;
+    /* Adjust font size for smaller screens */
+
+  }
+
+
+  .footer {
+    margin-top: 40%;
+  }
+}
