@@ -6,21 +6,15 @@ import { userContext } from '../App';
 const Logout = () => {
   const navigation = useNavigate();
 
-  const {state, dispatch} = useContext(userContext);
-  
-
-  // Clear the token from cookies when the component mounts
-  document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-  // For localStorage: localStorage.removeItem('token');
+  const { state, dispatch } = useContext(userContext);
 
   useEffect(() => {
     const logoutUser = async () => {
       try {
         // Make a request to the logout endpoint on your server
-
-        const URI = "http://localhost:3000/user/logout";
-
-        const response = await fetch(`${URI}`, {
+        const URI = 'http://localhost:3000';
+        
+        const response = await fetch(`${URI}/user/logout`, {
           method: 'GET',
           credentials: 'include', // Include credentials (cookies) in the request
         });
@@ -28,9 +22,17 @@ const Logout = () => {
         const data = await response.json();
 
         if (response.status === 200 && data.status === 'SUCCESS') {
+          // Clear the token from cookies when the logout is successful
+          document.cookie = 'jwtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+          localStorage.removeItem('jwtoken');
+          console.log('Logout successful');
+
+          // For localStorage: localStorage.removeItem('token');
+
           // Clear any user-related data or state on the frontend
+          dispatch({ type: 'USER', payload: false });
+
           // Redirect to the login page
-          dispatch({type:"USER", payload:false});
           navigation('/login');
         } else {
           // Handle logout failure
@@ -44,11 +46,9 @@ const Logout = () => {
 
     // Call the logoutUser function when the component mounts
     logoutUser();
-  }, [navigation]);
+  }, [dispatch, navigation]);
 
-  return (
-    <div>Welcome to Logout Page</div>
-  );
+  return <div>Welcome to Logout Page</div>;
 };
 
 export default Logout;

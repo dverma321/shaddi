@@ -3,11 +3,14 @@ const bcrypt = require('bcrypt')
 const path = require('path');  // Add this line to import the 'path' module
 const jwt = require('jsonwebtoken'); // Import jsonwebtoken
 
+const authenticate = require('../middleware/authentication');
+
 const router = express.Router()
 
 //getting User 
 
 const User = require('../model/User')
+
 
 // user verification
 const UserVerification = require('../model/UserVerification')
@@ -50,7 +53,7 @@ transporter.verify((error, success) => {
 
 // signup
 
-router.post("/signup", (req, res) => {
+router.post("/signup1", (req, res) => {
 
     let { name, email, password, confirmPassword, gender, phone } = req.body.user;
     
@@ -184,13 +187,16 @@ router.post("/signup", (req, res) => {
 
 })
 
-router.post('/signup1', async (req, res, next) => {
+
+// Testing purpose signup
+
+router.post('/signup', async (req, res, next) => {
     try {
       // Extract user data from request body
-      const { name, email, phone, gender, password } = req.body.user;
+      const { name, email, phone, gender, password, confirmPassword } = req.body.user;
   
       // Validate required fields
-      if (!name || !email || !phone || !gender || !password) {
+      if (!name || !email || !phone || !gender || !password || !confirmPassword) {
         return res.status(400).json({ status: 'FAILED', message: 'Please fill all the fields' });
       }
   
@@ -201,7 +207,7 @@ router.post('/signup1', async (req, res, next) => {
       }
   
       // Create a new user object
-      const newUser = new User({ name, email, phone, gender, password });
+      const newUser = new User({ name, email, phone, gender, password, confirmPassword});
   
       // Save the new user to the database
       await newUser.save();
@@ -420,11 +426,8 @@ router.get("/verified", (req, res) => {
 });
 
 
-
 // Signin route with JWT
-
-// Signin route with JWT
-router.post("/signin", async (req, res) => {
+router.post("/signin1", async (req, res) => {
     let { email, password } = req.body;
   
     email = email.trim();
@@ -494,8 +497,63 @@ router.post("/signin", async (req, res) => {
     }
 });
 
+// Testing purpose signin
+
+router.post("/signin", async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({
+      status: "FAILED",
+      message: "Email and password are required."
+    });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({
+        status: "FAILED",
+        message: "Invalid credentials."
+      });
+    }
+
+    if (user.password !== password) {
+      return res.status(401).json({
+        status: "FAILED",
+        message: "Invalid credentials."
+      });
+    }
+
+    const token = await user.generateAuthToken();
+    console.log("Retrieve Token from database: ", token);
+
+    // storing token in the cookie
+
+    res.cookie("jwtoken", token, {
+        expires: new Date(Date.now() + 25892000000),
+        httpOnly: true
+    });
+
+   
+    res.status(200).json({
+      status: "SUCCESS",
+      message: "Login successful.",
+      token,
+      userId: user._id
+    });
+  } catch (error) {
+    console.error('Error during login:', error);
+    res.status(500).json({
+      status: "FAILED",
+      message: "An error occurred during login."
+    });
+  }
+});
+
 
 // Logout route
+
 router.get('/logout', (req, res) => {
     // Simply clear the token on the client side
     res.clearCookie('jwtoken', {
@@ -510,62 +568,120 @@ router.get('/logout', (req, res) => {
 
 // getData route
 
-const Authenticate = require('../middleware/authentication');
 
-router.get("/getData", Authenticate, (req, res) => {
+router.get("/getData", authenticate, async (req, res) => {
     try {
+        console.log("/getData route has been called");
+
         // Accessing rootUser from the request object
         const rootUser = req.rootUser;
 
-        // Sending the rootUser information in the response
-        res.json({
-            status: "SUCCESS",
-            message: "Root user information retrieved successfully",
-            user: rootUser
-        });
+        res.send(rootUser);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        res.status(500).send('Something went wrong while fetching data');
+    }
+});
+
+// myprofile route
+
+router.post('/updateProfile', authenticate, async (req, res) => {
+    try {
+        console.log("update profile route has been called");
+      // Extract profile data from the request body
+      const { country, state, city, food, drink, smoke, bodyColor, height, weight, professionalStatus, work, salary } = req.body;
+  
+      // Get userId from the authenticated user middleware i.e if you are login then your information is stored in rootUser
+
+      const userId = req.rootUser._id;
+      console.log("Login User ID : ", userId);
+  
+      // Find the user profile data in the UserProfileData model
+
+      const userProfile = await User.findOne({ _id: userId });
+      console.log("User Found : ", userProfile);
+  
+      if (!userProfile) {
+        return res.status(404).json({ status: 'FAILED', message: 'User profile not found' });
+      }
+  
+      // Update the user profile data
+      userProfile.country = country;
+      userProfile.state = state;
+      userProfile.city = city;
+      userProfile.food = food;
+      userProfile.drink = drink;
+      userProfile.smoke = smoke;
+      userProfile.bodyColor = bodyColor;
+      userProfile.height = height;
+      userProfile.weight = weight;
+      userProfile.professionalStatus = professionalStatus;
+      userProfile.work = work;
+      userProfile.salary = salary;
+  
+      // Save the updated user profile data
+      await userProfile.save();
+  
+      // Optionally, you can update the corresponding user data in the User model as well
+      // Example:
+      
+      // const user = await User.findByIdAndUpdate(userId, { $set: { country, state, city } }, { new: true });
+  
+      res.status(200).json({ status: 'SUCCESS', message: 'Profile updated successfully', user: userProfile });
     } catch (err) {
-        console.error("Error fetching root user data:", err);
+      console.error('Error updating profile:', err);
+      res.status(500).json({ status: 'FAILED', message: 'Failed to update profile' });
+    }
+})
+
+
+// fetching usersImage.js
+
+const { truncate } = require('fs');
+
+// upload-image working
+
+router.post('/upload-image', authenticate, async (req, res) => {
+    try {
+        const { base64 } = req.body;
+        const userId = req.rootUser._id; // Assuming you have access to the user ID
+
+        // Find the user by ID and update their image
+        const user = await User.findOne({ _id: userId });
+        if (!user) {
+            return res.status(404).json({
+                status: "FAILED",
+                message: "User not found"
+            });
+        }
+
+        // Update the user's image in the database
+        user.image = base64;
+        await user.save();
+
+        res.json({
+            status: "OK",
+            message: "Image saved successfully"
+        });
+
+
+    } catch (err) {
+        console.log(err);
         res.status(500).json({
             status: "FAILED",
-            message: "Failed to fetch root user data"
+            message: "Failed to save image"
         });
     }
 });
 
 
-// fetching usersImage.js
-
-const usersImage = require('../model/UsersImage')
-
-// upload-image
-
-router.post('/upload-image', async (req, res) => {
-    try {
-
-        const { base64 } = req.body;
-
-        usersImage.create({ image: base64 })
-
-        res.json({
-            status: "OK",
-            message: "Image saved successfully"
-        })
-
-
-    }
-    catch (err) {
-        console.log(err);
-
-    }
-})
-
 // get image API
 
-router.get('/get-image', async (req, res) => {
+router.get('/get-image1', async (req, res) => {
 
     try {
 
-        await usersImage.find({}).then((data) => {
+        await User.find({}).then((data) => {
             res.send({
                 status: "OK",
                 message: "Images read successfully", data
@@ -581,6 +697,38 @@ router.get('/get-image', async (req, res) => {
     }
 
 })
+
+// get image for testing
+
+// Get image for the logged-in user
+router.get('/get-image', authenticate, async (req, res) => {
+    try {
+        const userId = req.rootUser._id; // Get the user ID from the authenticated user
+
+        // Find the user by ID
+        const user = await User.findById(userId);
+        if (!user || !user.image) {
+            return res.status(404).json({
+                status: "FAILED",
+                message: "User not found or no image found for the user"
+            });
+        }
+
+        // Send the image data in the response
+        res.status(200).json({
+            status: "SUCCESS",
+            message: "Image read successfully",
+            data: user.image
+        });
+    } catch (err) {
+        console.log("Error while reading image:", err);
+        res.status(500).json({
+            status: "FAILED",
+            message: "Error while reading image"
+        });
+    }
+});
+
 
 // Logout route
 

@@ -4,26 +4,32 @@ import heartTreeImage from '../images/heart_tree.png';
 import '../pages/Home.css';
 
 export const Home = () => {
-  const [user, setUser] = useState(null);  
+  const [user, setUser] = useState(null);
 
   const callGetData = async () => {
     try {
-      const URI = 'http://localhost:3000/user/getData';
-      const res = await fetch(URI, {
+      const token = localStorage.getItem('jwtoken'); // get token from local storage
+      const backendURL = 'http://localhost:3000'; // Backend / server URL fix
+  
+      const res = await fetch(`${backendURL}/user/getData`, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json'
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`, // declare and include Authorization token is necessary because it will fetch information from backend
         },
+        credentials: 'include', // it is also necessary to include credential otherwise jwtoken authorization will fail
       });
-      if (!res.ok) {
-        throw new Error(`Failed to fetch data: ${res.status}`);
-      }
-      const data = await res.json();
-      setUser(data.name); // Assuming data is { name: 'user name' }
+
+      const data = await res.json(); // Parse JSON response
+      setUser(data); // Update user state with the user property from the response
+  
+      // Handle response...
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
+  
   
 
   useEffect(() => {
@@ -39,7 +45,10 @@ export const Home = () => {
             <div className="col-12 col-md-12 ">
               {user ? (
                 <div>
-                  <h1 className="text-black">Welcome {user}</h1>
+                  <div className='img-fluid imagedata'><img src={user.image}/></div>
+                  <h1 className="text-black">Welcome {user.name}</h1>
+                  <h2 className='text-black'>Phone: {user.phone}</h2>
+                  <h3 className='text-black'>Work: {user.work}</h3>
                   <p className="lead lead-md text-black">Here you will find the perfect partner</p>
                 </div>
               ) : (

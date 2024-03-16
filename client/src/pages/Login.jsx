@@ -28,7 +28,9 @@ export const Login = () => {
           email: email,
           password: password,
         }),
+        credentials: 'include', // Include this line  
       });
+
 
       const data = await res.json();
   
@@ -36,13 +38,13 @@ export const Login = () => {
         const { token, userId } = data;
 
         // Store the token in localStorage
-        localStorage.setItem('token', token);
+        localStorage.setItem('jwtoken', token);
 
         // Dispatch user action to update context
         dispatch({ type: "USER", payload: true });
 
         // Redirect to user's profile or another authenticated route
-        navigation(`/myprofile/${userId}`);
+        navigation('/myprofile');
         
         window.alert("Login Successfully");
       } else {
