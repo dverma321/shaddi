@@ -644,7 +644,7 @@ const { truncate } = require('fs');
 router.post('/upload-image', authenticate, async (req, res) => {
     try {
         const { base64 } = req.body;
-        const userId = req.rootUser._id; // Assuming you have access to the user ID
+        const userId = req.rootUser._id; // get the authenticated id from the jwtoken if user is login
 
         // Find the user by ID and update their image
         const user = await User.findOne({ _id: userId });
@@ -674,33 +674,8 @@ router.post('/upload-image', authenticate, async (req, res) => {
     }
 });
 
-
-// get image API
-
-router.get('/get-image1', async (req, res) => {
-
-    try {
-
-        await User.find({}).then((data) => {
-            res.send({
-                status: "OK",
-                message: "Images read successfully", data
-            })
-        })
-            .catch((err) => {
-                console.log("Error while reading images : ", err)
-            })
-
-    }
-    catch (err) {
-        console.log("Getting Image Error : ", err);
-    }
-
-})
-
-// get image for testing
-
 // Get image for the logged-in user
+
 router.get('/get-image', authenticate, async (req, res) => {
     try {
         const userId = req.rootUser._id; // Get the user ID from the authenticated user
