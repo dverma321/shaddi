@@ -37,18 +37,83 @@
 }
 
 
-.imagedata img{
+.imagedata img {
   height: 100px;
   width: 100px;
-  border: 4px solid #000;
   padding: 1%;
+  border-style: solid;
+
+  /* Gradient border color */
+  border-image: linear-gradient(to right, black, red);
+  border-image-slice: 1;
+  /* Ensure the entire border is covered by the gradient */
+}
+
+h1.home_user {
+
+  padding-top: 2%;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  /* gradient effect on text  */
+
+  background-image: linear-gradient(to right, #000, lightcoral);
+  -webkit-background-clip: text;
+  /* Apply gradient to text */
+  -webkit-text-fill-color: transparent;
+
 }
 
 
+h3.home_work {
+
+  font-family: 'Arial', sans-serif;
+  /* Set font family */
+  /* color: red; Set text color */
+  font-weight: bold;
+  /* Set font weight to bold */
+  padding-top: 1%;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: inline;
+
+  /* for gradient effect in text  */
+
+  background-image: linear-gradient(to right, lightcoral, #000);
+  -webkit-background-clip: text;
+  /* Apply gradient to text */
+  -webkit-text-fill-color: transparent;
+
+}
+
+p.description {
+  font-size: 14px;
+  color: gray;
+  padding: 1%;
+}
 
 /* Responsive Styles */
 
 @media (max-width: 768px) {
+
+  .imagedata img {
+
+    margin-top: -10%;
+
+  }
+
+  h1.home_user {
+
+    margin-top: 1%;
+    font-size: 22px;
+  }
+
+
+  h3.home_work {
+    margin-top: 1%;
+    font-size: 16px;
+  }
+
   .overlay-text {
     font-size: 18px;
     /* Adjust font size for smaller screens */
@@ -74,6 +139,19 @@
 }
 
 @media (max-width: 576px) {
+
+  h1.home_user {
+
+    margin-top: 1%;
+    font-size: 20px;
+  }
+
+
+  h3.home_work {
+    margin-top: 1%;
+    font-size: 16px;
+  }
+
   .overlay-text {
     font-size: 14px;
     /* Further reduce font size for smaller screens */
@@ -91,6 +169,11 @@
     font-size: 18px;
     /* Adjust font size for smaller screens */
 
+  }
+
+  p.description {
+    font-size: 8px;
+    padding: 1%;
   }
 
 

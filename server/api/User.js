@@ -2,6 +2,7 @@ const express = require('express')
 const bcrypt = require('bcrypt')
 const path = require('path');  // Add this line to import the 'path' module
 const jwt = require('jsonwebtoken'); // Import jsonwebtoken
+const moment = require('moment'); // for Date Format
 
 const authenticate = require('../middleware/authentication');
 
@@ -589,7 +590,7 @@ router.post('/updateProfile', authenticate, async (req, res) => {
     try {
         console.log("update profile route has been called");
       // Extract profile data from the request body
-      const { country, state, city, food, drink, smoke, bodyColor, height, weight, professionalStatus, work, salary } = req.body;
+      const { country, state, city, food, drink, smoke, bodyColor, height, weight, professionalStatus, work, salary, caste, dob } = req.body;
   
       // Get userId from the authenticated user middleware i.e if you are login then your information is stored in rootUser
 
@@ -604,8 +605,12 @@ router.post('/updateProfile', authenticate, async (req, res) => {
       if (!userProfile) {
         return res.status(404).json({ status: 'FAILED', message: 'User profile not found' });
       }
+
+       // Convert the dob to the desired format DD-MM-YYYY using moment.js
+        const formattedDOB = moment(dob).format('DD-MM-YYYY');
+        
   
-      // Update the user profile data
+    //   // Update the user profile data
       userProfile.country = country;
       userProfile.state = state;
       userProfile.city = city;
@@ -618,6 +623,10 @@ router.post('/updateProfile', authenticate, async (req, res) => {
       userProfile.professionalStatus = professionalStatus;
       userProfile.work = work;
       userProfile.salary = salary;
+      userProfile.dob = formattedDOB;
+      userProfile.caste = caste;
+
+   
   
       // Save the updated user profile data
       await userProfile.save();

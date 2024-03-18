@@ -14,7 +14,6 @@ const Schema = mongoose.Schema({
 
     // user update profile schema
 
-    dob: Date,   
     country: String,
     state: String,
     city: String,
@@ -22,20 +21,29 @@ const Schema = mongoose.Schema({
     alternateMobileNumber: Number,
 
     // personal Data 
-    
+
+    dob: String,    
     height: Number,
     weight: Number,
-    faceColor: String,
+    caste: String,    
+    bodyColor: String,
+    drink: String,
+    smoke: String,
+    food: String,
     hobbies: [String],
-    work: String,
-    income: Number,
+
+
+    // work Data
+
+    work: String,    
+    professionalStatus: String,
+    salary: Number,
 
     // image upload , if error like jwt token is undefined then comment image
 
     image: {
         type: String,        
-    },
-    
+    },  
    
 
     tokens : [

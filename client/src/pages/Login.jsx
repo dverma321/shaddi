@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { userContext } from '../App';
+import '../pages/Login.css';
+import loginImage from '../images/login.jpg'
 
 export const Login = () => {
   const [email, setEmail] = useState('');
@@ -68,19 +70,19 @@ export const Login = () => {
 
                 {/* image for login page  */}
                 <div className='form-outline'>
-                  <img src="" alt='image' className='img-fluid' />
+                  <img src={loginImage} alt='image' className='img-fluid' />
                 </div>
 
                 {/* Login page credentials  */}
                 <form method='POST' className='signin-form' id='signin-form'>
-                  <div className="mb-4">
+                  <div className="mb-4 input-container">
                     <label className="form-label" htmlFor="signinformyouremail"><i className="zmdi zmdi-email"></i> Email</label>
                     <input type="email" name='email' id="signinformyouremail" className="form-control form-control-lg" placeholder='Enter your email' autoComplete='off'
                      value={email}
                      onChange= { (e) => setEmail(e.target.value)} required />
                   </div>
 
-                  <div className="mb-4">
+                  <div className="mb-4 input-container">
                     <label className="form-label" htmlFor="signinformyourpassword"><i className="zmdi zmdi-lock"></i> Password</label>
                     <input type="password" name='password' id="signinformyourpassword" className="form-control form-control-lg" placeholder='Enter password' autoComplete='off'
                      value={password}

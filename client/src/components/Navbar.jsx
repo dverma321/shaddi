@@ -25,9 +25,9 @@ export const Navbar = () => {
                 <>
 
                     <li><NavLink to="/">Home</NavLink></li>
-                    <li><NavLink to="/blog">Blog</NavLink></li>
-                    <li><NavLink to="/about">Your Data</NavLink></li>
-                    <li><NavLink to="/myprofile">My Profile</NavLink></li>
+                    <li><NavLink to="/blog">Global Blog</NavLink></li>
+                    <li><NavLink to="/about">My Information</NavLink></li>
+                    <li><NavLink to="/myprofile">Update Profile</NavLink></li>
                     <li><NavLink to="/contact">Contact us</NavLink></li>
                     <li><NavLink to="/logout">Logout</NavLink></li>
 
@@ -41,7 +41,7 @@ export const Navbar = () => {
         <header>
             <nav class="navbar navbar-expand-lg my_navbar">
                 <div class="container-fluid">
-                    <a class="navbar-brand">Find Perfect Partner</a>
+                    <p class="logo">Find Perfect Partner</p>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>

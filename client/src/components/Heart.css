@@ -1,0 +1,61 @@
+/* Heart.css */
+
+.falling-image-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width:  60vw; /* Set width minus border width */
+  height: 80vh; /* Set height to viewport height */
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 9999;
+  margin-top: -10%;
+  
+}
+
+.falling-image {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  animation: fallAnimation linear infinite;
+}
+
+@keyframes fallAnimation {
+  from {
+    transform: translateY(-100px);
+  }
+  to {
+    transform: translateY(calc(100vh + 100px));
+  }
+}
+
+/* For Medium Screen (768px to 1100px) */
+@media (min-width: 768px) and (max-width: 1100px) {
+  .falling-image-container {
+    width: calc(60% - 4px); /* Set width minus border width */
+    height: 40vh;
+    margin-top: -25%;
+  }
+
+  .falling-image {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+
+/* For Mobile Screen */
+@media (max-width: 576px) {
+  .falling-image-container {
+    width: calc(100% - 4px);
+    height: 40vh;
+    margin-top: -25%;
+  }
+
+  .falling-image {
+    width: 40px;
+    height: 40px;
+  }
+}

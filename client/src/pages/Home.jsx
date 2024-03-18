@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import heartTreeImage from '../images/heart_tree.png';
 import '../pages/Home.css';
+import '../components/Heart'
+import Heart from '../components/Heart';
 
 export const Home = () => {
   const [user, setUser] = useState(null);
@@ -46,17 +48,21 @@ export const Home = () => {
               {user ? (
                 <div>
                   <div className='img-fluid imagedata'><img src={user.image}/></div>
-                  <h1 className="text-black">Welcome {user.name}</h1>
-                  <h2 className='text-black'>Phone: {user.phone}</h2>
-                  <h3 className='text-black'>Work: {user.work}</h3>
-                  <p className="lead lead-md text-black">Here you will find the perfect partner</p>
+                  <h1 className='home_user'> Welcome: {user.name} </h1>
+                  {/* <h2 className='text-black'>Phone: {user.phone}</h2> */}
+                  <h3 className='home_work'>Professional: {user.work}</h3> 
+                  <p className="description">Keep Visiting this website to find your perfect partner based on data you provided</p>
                 </div>
               ) : (
                 <div>
-                  <h1 className="text-black">Welcome User</h1>
-                  <p className="lead lead-md text-black">Here you will find the perfect partner</p>
+                  <h1 className="home_user">Please Login to continue using this website</h1>
+                  <p className="description">Here you will find the perfect partner</p>
                 </div>
               )}
+
+              {/* Rendering falling images  */}
+              <Heart />
+
             </div>
           </div>
         </div>

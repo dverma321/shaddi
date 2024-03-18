@@ -1,57 +1,72 @@
-.my_navbar{
-    max-width: 100%;
-    padding: 4.2rem 2.4rem;
-    display: flex;
-    justify-content: space-between;
-    background-color: lightcoral;
-  }
 
-  .logo {
-    text-transform: uppercase;
-    color: aliceblue;
-    font-weight: bold;
-    font-size: larger;
-    padding: 2px;
-    border-radius: 5px;
-  
-    /* Glowing Animation */
-    animation: glow 1.5s ease-in-out infinite alternate;
-  }
-  
-  @keyframes glow {
-    0% {
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    }
-    100% {
-      text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-    }
-  }
+.my_navbar {
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for depth effect */
+  padding: 1rem 2rem; /* Add padding for spacing */
+  border-radius: 10px; /* Rounded corners for a modern look */
+}
+
+.logo {
+
+  font-family: 'Roboto', sans-serif; /* Set a custom font */
+  font-size: 20px; /* Adjust font size */
+  font-weight: bold; /* Set font weight to bold */
+  text-transform: uppercase; /* Uppercase text */
+  letter-spacing: 2px; /* Add letter spacing for a stylish look */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Add text shadow for depth */
+
+  background-image: linear-gradient(to right, #000, lightcoral);
+  -webkit-background-clip: text; /* Apply gradient to text */
+  -webkit-text-fill-color: transparent;
+  padding: 1%;
+}
 
 
-/* Navbar.css */
 
 nav ul {
-    list-style-type: none;
-    display: flex;
-    gap: 1.5rem;
-    margin: 0;
-    padding: 0;
-  }
+  list-style-type: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  text-transform: uppercase;
+}
+
+nav a {
+  text-decoration: none;
   
-  nav li {
-    text-transform: uppercase;
+  /* Set your desired link color */
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+
+  background-image: linear-gradient(to right, #000, lightcoral);
+  -webkit-background-clip: text; /* Apply gradient to text */
+  -webkit-text-fill-color: transparent; 
+
+  /* Add color transition */
+}
+
+
+
+/* For Tablet Screen  */
+
+@media (max-width: 768px) {
+  .logo {
+      font-size: 18px; /* Adjust font size for smaller screens */
   }
-  
-  nav a {
-    text-decoration: none;
-    color: #ffffff; /* Set your desired link color */
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+}
+
+ /* For Mobile Screen */
+
+@media (max-width: 576px) {
+  .logo {
+      font-size: 12px; /* Further reduce font size for smaller screens */
+      margin: 3%;
   }
-  
-  nav a:hover {
-    background-color: #2c3e50; /* Set your desired link hover background color */
-    color: #ffffff; /* Set your desired link hover color */
-  }
-  
+}
+
+
+
