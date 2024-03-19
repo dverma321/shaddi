@@ -25,6 +25,7 @@ const Schema = mongoose.Schema({
     dob: String,    
     height: Number,
     weight: Number,
+    community: String,
     caste: String,    
     bodyColor: String,
     drink: String,

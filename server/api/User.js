@@ -584,13 +584,26 @@ router.get("/getData", authenticate, async (req, res) => {
     }
 });
 
+// all users route
+
+router.get('/users', async (req, res) => {
+    try {
+      const users = await User.find(); // Query all users from the User collection
+  
+      res.json(users); // Send the users data as a JSON response
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      res.status(500).json({ error: 'Something went wrong while fetching users' });
+    }
+  });
+
 // myprofile route
 
 router.post('/updateProfile', authenticate, async (req, res) => {
     try {
         console.log("update profile route has been called");
       // Extract profile data from the request body
-      const { country, state, city, food, drink, smoke, bodyColor, height, weight, professionalStatus, work, salary, caste, dob } = req.body;
+      const { country, state, city, food, drink, smoke, bodyColor, height, weight, professionalStatus, work, salary, caste, dob, community } = req.body;
   
       // Get userId from the authenticated user middleware i.e if you are login then your information is stored in rootUser
 
@@ -623,8 +636,9 @@ router.post('/updateProfile', authenticate, async (req, res) => {
       userProfile.professionalStatus = professionalStatus;
       userProfile.work = work;
       userProfile.salary = salary;
-      userProfile.dob = formattedDOB;
+      userProfile.dob = formattedDOB || '';
       userProfile.caste = caste;
+      userProfile.community = community;
 
    
   

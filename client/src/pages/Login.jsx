@@ -46,7 +46,7 @@ export const Login = () => {
         dispatch({ type: "USER", payload: true });
 
         // Redirect to user's profile or another authenticated route
-        navigation('/myprofile');
+        navigation('/'); // navigating to Home Page
         
         window.alert("Login Successfully");
       } else {

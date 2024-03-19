@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Signup from '../images/signup.webp';
 
 export const Registration = () => {
 
@@ -102,7 +103,7 @@ export const Registration = () => {
                                 <h2 className="text-uppercase text-center mb-5">Create an account</h2>
 
                                 <div className='form-outline text-center mb-4'>
-                                    <img src="" alt='image' className='img-fluid' />
+                                    <img src={Signup} alt='image' className='img-fluid' />
                                 </div>
 
                                 <form method='POST' className='register-form' id='register-form'>

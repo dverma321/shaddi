@@ -2,6 +2,8 @@ import { NavLink } from "react-router-dom";
 import './Navbar.css';
 import { useContext, useState } from "react";
 import { userContext } from '../App';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
 
 
 export const Navbar = () => {
@@ -15,6 +17,7 @@ export const Navbar = () => {
                     <li><NavLink to="/">Home</NavLink></li>
                     <li><NavLink to="/register">Registration</NavLink></li>
                     <li><NavLink to="/login">Login</NavLink></li>
+                    <li><NavLink to="/yourmatching">Find Partner</NavLink></li>
 
                 </>
             )
@@ -25,6 +28,7 @@ export const Navbar = () => {
                 <>
 
                     <li><NavLink to="/">Home</NavLink></li>
+                    <li><NavLink to="/yourmatching">Find Partner</NavLink></li>
                     <li><NavLink to="/blog">Global Blog</NavLink></li>
                     <li><NavLink to="/about">My Information</NavLink></li>
                     <li><NavLink to="/myprofile">Update Profile</NavLink></li>
@@ -37,16 +41,16 @@ export const Navbar = () => {
     }
 
 
-    return <>
+    return (
         <header>
-            <nav class="navbar navbar-expand-lg my_navbar">
-                <div class="container-fluid">
-                    <p class="logo">Find Perfect Partner</p>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+            <nav className="navbar navbar-expand-lg my_navbar">
+                <div className="container-fluid">
+                    <p className="logo">Find Perfect Partner</p>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                             <RenderMenu />
 
                         </ul>
@@ -55,5 +59,7 @@ export const Navbar = () => {
                 </div>
             </nav>
         </header>
-    </>
+    );
 }
+
+export default Navbar;

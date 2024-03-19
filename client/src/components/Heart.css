@@ -11,6 +11,7 @@
   z-index: 9999;
   margin-top: -10%;
   
+  
 }
 
 .falling-image {
@@ -34,9 +35,10 @@
 /* For Medium Screen (768px to 1100px) */
 @media (min-width: 768px) and (max-width: 1100px) {
   .falling-image-container {
-    width: calc(60% - 4px); /* Set width minus border width */
-    height: 40vh;
-    margin-top: -25%;
+    width: 400px; /* Set width minus border width */
+    height: 35vh;
+    left: 40%;
+    margin-top: -40%;
   }
 
   .falling-image {
@@ -49,9 +51,11 @@
 /* For Mobile Screen */
 @media (max-width: 576px) {
   .falling-image-container {
-    width: calc(100% - 4px);
-    height: 40vh;
+    width: 52vw;
+    left: 40%;
+    height: 35vh;
     margin-top: -25%;
+    
   }
 
   .falling-image {

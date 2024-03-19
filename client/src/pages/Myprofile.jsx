@@ -13,6 +13,8 @@ const Myprofile = () => {
 
   const professionalStatusOptions = ['Student', 'Employee', 'Freelancer', 'Other'];
 
+  const communityOptions = ['Hindu', 'Muslim', 'Sikh', 'Christhan', 'Other Community'];
+
   const [formData, setFormData] = useState({
     country: '',
     state: '',
@@ -67,6 +69,7 @@ const Myprofile = () => {
             salary: data.salary || '',
             caste: data.caste || '',
             dob: data.dob || '',
+            community: data.community || '',
           });
         }
       } catch (error) {
@@ -212,6 +215,14 @@ const Myprofile = () => {
       console.log("Image upload Error : ", err)
     }
 
+    // Format the date input value as DD-MM-YYYY
+    const inputDate = e.target.value;
+    const [year, month, day] = inputDate.split('-');
+    const formattedDate = `${day}-${month}-${year}`;
+
+    // Update the form data state with the formatted date
+    setFormData({ ...formData, dob: formattedDate });
+
   }
 
 
@@ -263,8 +274,8 @@ const Myprofile = () => {
 
 
                       <div className="form-outline mb-4">
-                        <label className="form-label">Country:</label>
-                        <select className="form-select" onChange={handleInputChange} name="country" value={formData.country} >
+                        <label className="form-label">Country: <span className="text-danger">*</span></label>
+                        <select className="form-select" onChange={handleInputChange} name="country" value={formData.country} required >
                           <option value="" disabled>Select Country</option>
                           {countryOptions.map((country, index) => (
                             <option key={index} value={country.toUpperCase()}>{country.toUpperCase()}</option>
@@ -273,13 +284,13 @@ const Myprofile = () => {
                       </div>
 
                       <div className="form-outline mb-4">
-                        <label className="form-label" htmlFor="labelstate"><i className="zmdi "></i> State</label>
+                        <label className="form-label" htmlFor="labelstate"><i className="zmdi "></i> State <span className="text-danger">*</span></label>
                         <input
                           type="text" name="state" onChange={handleInputChange} value={formData.state} id="formstate" className="form-control form-control-lg" placeholder='Enter Your State' autoComplete='off' />
                       </div>
 
                       <div className="form-outline mb-4">
-                        <label className="form-label" htmlFor="labelCity"><i className="zmdi "></i> City</label>
+                        <label className="form-label" htmlFor="labelCity"><i className="zmdi "></i> <span className="text-danger">*</span> City</label>
                         <input
                           type="text" name="city" onChange={handleInputChange} value={formData.city} id="formcity" className="form-control form-control-lg" placeholder='City' autoComplete='off' />
                       </div>
@@ -343,15 +354,15 @@ const Myprofile = () => {
                     </div>
                   </div>
 
-                   {/* Section 3: Work Data */}
+                  {/* Section 3: Work Data */}
 
-                   <div className="col-md-6">
+                  <div className="col-md-6">
                     <div className="form-section">
                       <h3 className="text-center mb-4 gradient-text">Professional Data</h3>
 
                       <div className="form-outline mb-4">
-                        <label className="form-label">Professional Status:</label>
-                        <select className="form-select" name="professionalStatus" onChange={handleInputChange} value={formData.professionalStatus} >
+                        <label className="form-label">Professional Status: <span className="text-danger">*</span></label>
+                        <select className="form-select" name="professionalStatus" onChange={handleInputChange} value={formData.professionalStatus} required >
                           <option value="" disabled>Select Professional Status</option>
                           {professionalStatusOptions.map((status, index) => (
                             <option key={index} value={status.toLowerCase()}>{status}</option>
@@ -400,20 +411,30 @@ const Myprofile = () => {
                       </div>
 
                       <div className="form-outline mb-4">
-                        <label className="form-label">Date of Birth:</label>
-                        <input className="form-control" type="date" name="dob" onChange={handleInputChange} value={formData.dob} />
+                        <label className="form-label">Date of Birth: <span className="text-danger">*</span></label>
+                        <input className="form-control" type="date" name="dob" onChange={handleInputChange} value={formData.dob} required />
                       </div>
 
                       <div className="form-outline mb-4">
-                        <label className="form-label">Caste:</label>
-                        <input className="form-control" type="text" name="caste" onChange={handleInputChange} value={formData.caste} />
+                        <label className="form-label">Community: <span className="text-danger">*</span></label>
+                        <select className="form-select" name="community" onChange={handleInputChange} value={formData.community} required >
+                          <option value="" disabled>Select Community</option>
+                          {communityOptions.map((community, index) => (
+                            <option key={index} value={community.toLowerCase()}>{community}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="form-outline mb-4">
+                        <label className="form-label">Caste: <span className="text-danger">*</span></label>
+                        <input className="form-control" type="text" name="caste" onChange={handleInputChange} value={formData.caste} required />
                       </div>
 
 
                     </div>
                   </div>
 
-                 
+
 
 
 

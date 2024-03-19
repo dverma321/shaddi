@@ -1,10 +1,24 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Navigate } from 'react-router-dom'; // Import Navigate component
+import { userContext } from '../App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../pages/About.css'
 
 const About = () => {
     const [userData, setUserData] = useState(null);
+
+    // checking user is logged in or not using useContext hook
+
+    const { state } = useContext(userContext);
+
+    if (!state) {
+        // If not logged in, redirect to the login page using Navigate component
+        return <Navigate to="/login" replace />;
+      }
+    
+      // Getting Data from Database
+
 
     const callGetData = async () => {
         try {
@@ -70,6 +84,7 @@ const About = () => {
                                     <Col md={6}>
                                         <h3 className="gradient-text">Additional Information</h3>
                                         <p><strong>Date of Birth:</strong> {userData.dob}</p>
+                                        <p><strong>Community:</strong> {userData.community}</p>
                                         <p><strong>Caste:</strong> {userData.caste}</p>
                                         {/* Add more additional information fields */}
                                     </Col>
@@ -77,7 +92,7 @@ const About = () => {
                                         <h3 className="gradient-text">Work and Income</h3>
                                         <p><strong>Professional Status:</strong> {userData.professionalStatus}</p>
                                         <p><strong>Work:</strong> {userData.work}</p>
-                                        <p><strong>Salary (In Dollars):</strong> {userData.salary}</p>
+                                        <p><strong>Salary:</strong> {userData.salary} $</p>
                                         {/* Add more work and income fields */}
                                     </Col>
                                 </Row>
@@ -98,6 +113,8 @@ const About = () => {
                                     <Col md={6}>
                                         <h3 className="gradient-text">Body Data</h3>
                                         <p><strong>Face Color:</strong> {userData.bodyColor}</p>
+                                        <p><strong>Height:</strong> {userData.height} CM</p>
+                                        <p><strong>Weight:</strong> {userData.weight} CM</p>
 
                                         {/* Add more additional information fields */}
                                     </Col>

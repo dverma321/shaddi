@@ -1,0 +1,41 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    text-transform: uppercase;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+
+  td button{
+    padding: 2%;    
+    text-transform: uppercase;
+  }
+
+  .accept{
+    background-color: lightgreen;
+    color: white;
+    
+  }
+
+  .accept:hover{
+    background-image: linear-gradient(to right, #4CAF50, #008CBA); /* Gradient color */
+
+  }
+
+  .reject{
+    background-color: red;
+    color: white;
+  }
+
+  .reject:hover{
+    background-image: linear-gradient(to right, #000, red); /* Gradient color */
+  }
+  
