@@ -596,7 +596,7 @@ router.get("/getData", authenticate, async (req, res) => {
 
 // all users route
 
-router.get('/users', async (req, res) => {
+router.get('/users', cors(), async (req, res) => {
     try {
       const users = await User.find(); // Query all users from the User collection
   
