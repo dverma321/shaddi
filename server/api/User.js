@@ -574,6 +574,9 @@ router.get('/logout', (req, res) => {
         sameSite: 'none',
         credentials: 'include'
     })
+    req.rootUser = null;
+    console.log("user logout successfully...");
+    
     res.json({
         status: "SUCCESS",
         message: "Logout Successful"
