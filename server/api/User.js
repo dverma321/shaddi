@@ -543,7 +543,11 @@ router.post("/signin", async (req, res) => {
 
     res.cookie("jwtoken", token, {
         expires: new Date(Date.now() + 25892000000),
-        httpOnly: true
+        httpOnly: true,         
+        secure: true,
+        sameSite: 'none',
+        path: '/',
+        credentials: 'include'
     });
 
    
