@@ -587,7 +587,7 @@ router.get('/logout', (req, res) => {
 // getData route
 
 
-router.get("/getData", cors(), authenticate, async (req, res) => {
+router.get("/getData", authenticate, async (req, res) => {
     try {
         console.log("/getData route has been called");
 
