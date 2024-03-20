@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:5173', // Replace with the actual origin of your frontend application
+  origin: 'https://findyourperfectmatch.netlify.app/', // Replace with the actual origin of your frontend application
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add other methods as needed
   credentials: true,
 }));
