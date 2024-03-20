@@ -13,7 +13,7 @@ const port = process.env.PORT || 3000;
 
 app.use(cors(
     {
-        origin:"https://findyourperfectmatch.netlify.app/",
+        origin:"https://findyourperfectmatch.netlify.app",
         methods:'GET,HEAD,PUT,PATCH,POST,DELETE',
         credentials: true, // set the cookie true
         optionsSuccessStatus: 204     // Respond with a 204 status code for preflight requests
