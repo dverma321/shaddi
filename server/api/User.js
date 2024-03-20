@@ -744,7 +744,7 @@ router.get('/get-image', authenticate, async (req, res) => {
 
 // Logout route
 
-router.get('/logout', (req, res) => {
+router.get('/logout1', (req, res) => {
     // Clear the session or token on the server side
     // Example for clearing a session
     req.session.destroy((err) => {
