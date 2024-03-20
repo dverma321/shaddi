@@ -568,7 +568,11 @@ router.post("/signin", async (req, res) => {
 router.get('/logout', (req, res) => {
     // Simply clear the token on the client side
     res.clearCookie('jwtoken', {
-        path: '/'
+        path: '/',
+         httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+        credentials: 'include'
     })
     res.json({
         status: "SUCCESS",
@@ -580,7 +584,7 @@ router.get('/logout', (req, res) => {
 // getData route
 
 
-router.get("/getData", authenticate, async (req, res) => {
+router.get("/getData", cors(), authenticate, async (req, res) => {
     try {
         console.log("/getData route has been called");
 
