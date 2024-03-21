@@ -4,6 +4,7 @@ const path = require('path');  // Add this line to import the 'path' module
 const jwt = require('jsonwebtoken'); // Import jsonwebtoken
 const moment = require('moment'); // for Date Format
 const cors = require('cors');
+const fs = require('fs');
 
 const authenticate = require('../middleware/authentication');
 
