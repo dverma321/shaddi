@@ -771,6 +771,82 @@ router.get('/logout1', (req, res) => {
 });
 
 
+// multer image upload testing
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './uploads/'); // Save uploaded files to 'uploads' directory
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}_${(file.originalname)}`); // Unique filename
+  },
+});
+
+const upload = multer({ storage });
+
+router.post('/multerUpload', authenticate, upload.single('image'), async (req, res) => {
+  try {
+
+
+    const userId = req.rootUser._id; // get the authenticated id from the jwtoken if user is login
+
+    const user = await User.findOne({ _id: userId });
+    if (!user) {
+        return res.status(404).json({
+            status: "FAILED",
+            message: "User not found"
+        });
+    }
+
+    console.log("Image Data on the Backend : ", req.file);
+
+    user.imageData = req.file.filename;
+
+    await user.save();
+
+    res.status(201).json({ message: 'Image uploaded successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// getting multer image testing
+
+
+router.get('/multerImageData', authenticate, async (req, res) => {
+    try {
+  
+  
+      const userId = req.rootUser._id; // get the authenticated id from the jwtoken if user is login
+  
+      const user = await User.findOne({ _id: userId });
+      if (!user) {
+          return res.status(404).json({
+              status: "FAILED",
+              message: "User not found"
+          });
+      }
+
+      const imagePath = path.join(__dirname, '..', 'uploads', user.imageData); // Assuming 'uploads' directory
+      
+      // error handling if image is not found
+
+      if (fs.existsSync(imagePath)) {
+        res.sendFile(imagePath);
+      } else {
+        res.status(404).json({ error: 'Image not found' });
+      }
+  
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+
+
+
 
 
 module.exports = router
