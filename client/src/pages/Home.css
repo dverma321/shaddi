@@ -36,10 +36,22 @@
   text-align: center;
 }
 
+.meeting {
+  height: 100%;
+  width: 100%;
+  margin-top: 1%;
+
+}
+
+.candlelight{
+  height: 100%;
+  width: 100%;
+}
+
 
 .imagedata {
-  height: 150px;
-  width: 150px;
+  height: 100%;
+  width: 100%;
   padding: 1%;
   border-style: solid;
 
@@ -126,8 +138,6 @@ p.description {
     padding-top: 2%;
     text-transform: uppercase;
     font-size: 16px;
-
-
   }
 
 
@@ -155,6 +165,11 @@ p.description {
 
   }
 
+  .candlelight{
+    height: 70%;
+    width: 70%;
+  }
+
   .footer {
     margin-top: 10%;
   }
@@ -178,8 +193,30 @@ p.description {
     margin-top: 1%;
     letter-spacing: 0;
 
+  }
+
+  
+.imagedata {
+  height: 35%;
+  width: 35%;
+  
+  border-style: solid;
+
+  /* Gradient border color */
+  border-image: linear-gradient(to right, black, red);
+  border-image-slice: 1;
+  /* Ensure the entire border is covered by the gradient */
+}
 
 
+  .meeting {
+    margin-top: 15%;
+  }
+
+  .candlelight{
+    height: 50%;
+    width: 50%;
+    margin-top: 20%;
   }
 
 
@@ -214,7 +251,7 @@ p.description {
 
 
   .footer {
-    margin-top: 40%;
+    margin-top: 55%;
   }
 }
 
@@ -228,6 +265,105 @@ p.description {
     /* Allow text to wrap */
     max-width: 100%;
     /* Limit the width of the text container */
-    margin-top: -12%;
+    margin-top: 12%;
   }
+
+  .meeting {
+
+    width: 250px;
+    height: 250px;
+    margin-top: 10%;
+
+  }
+
+  .candlelight{
+    height: 50%;
+    width: 50%;
+    margin-top: 5%;
+  }
+
+  
+.imagedata {
+  height: 40%;
+  width: 40%;
+  margin-top: 10%;
+  
+  border-style: solid;
+
+  /* Gradient border color */
+  border-image: linear-gradient(to right, black, red);
+  border-image-slice: 1;
+  /* Ensure the entire border is covered by the gradient */
+}
+
+
+
+  .footer {
+    margin-top: 55%;
+  }
+
+}
+
+/* Larger Screen Display above 1024 px  */
+
+@media (min-width: 1025px) {
+  h1.initial_home_user {
+    font-size: 18px;
+    /* Adjust font size for medium-sized screens */
+    white-space: normal;
+    /* Allow text to wrap */
+    max-width: 100%;
+    /* Limit the width of the text container */
+    margin-top: 12%;
+  }
+
+  .meeting {
+
+    width: 70%;
+    height: 70%;
+
+  }
+
+  .candlelight{
+    height: 50%;
+    width: 50%;
+  }
+
+    
+.imagedata {
+  height: 40%;
+  width: 40%;
+  margin-top: 10%;  
+  border-style: solid;
+  /* Gradient border color */
+  border-image: linear-gradient(to right, black, red);
+  border-image-slice: 1;
+  /* Ensure the entire border is covered by the gradient */
+}
+
+
+h1.home_user {
+
+  padding-top: 10%;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+ 
+
+}
+
+
+h3.home_work {
+  
+  padding-top: 5%;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: inline;
+  
+}
+
+  .footer {
+    margin-top: 30%;
+  }
+
 }

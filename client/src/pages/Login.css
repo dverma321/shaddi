@@ -41,3 +41,10 @@
     color: lightcoral;
   }
   
+
+  .navlink_login{
+    color: lightcoral;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 1%;
+  }

@@ -23,7 +23,9 @@ const About = () => {
     const callGetData = async () => {
         try {
             const token = localStorage.getItem('jwtoken'); // get token from local storage
-            const backendURL = 'http://localhost:3000'; // Backend / server URL fix
+            const backendURL = 'http://localhost:3000'; // Backend / server URL fix 
+            
+            // const backendURL = 'https://shaddi.onrender.com'; // Backend / server URL fix 
 
             const res = await fetch(`${backendURL}/user/getData`, {
                 method: 'GET',
@@ -31,6 +33,8 @@ const About = () => {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`, // declare and include Authorization token is necessary because it will fetch information from backend
+                    'Access-Control-Allow-Origin': 'https://findyourperfectmatch.netlify.app', // Specify allowed origin
+
                 },
                 credentials: 'include', // it is also necessary to include credential otherwise jwtoken authorization will fail
             });
@@ -52,11 +56,17 @@ const About = () => {
         <div>
             <Container>
                 <h1 className="text-center mt-5 mb-4">User Profile</h1>
+
                 {userData && (
                     <>
                         <Card className="mb-4">
                             <Card.Body>
                                 <Row>
+                                    <Col md={12} className='text-center mb-5'>
+                                        <h3 className="gradient-text">Personal Photo</h3>
+                                        <img src={userData.imageUrl} style={{height:'200px', width:'200px'}} />
+                                       
+                                    </Col>
                                     <Col md={6}>
                                         <h3 className="gradient-text">Personal Information</h3>
                                         <p><strong>Name:</strong> {userData.name}</p>

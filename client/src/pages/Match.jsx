@@ -10,7 +10,9 @@ const Match = () => {
   const callGetUserData = async () => {
     try {
       const token = localStorage.getItem('jwtoken');
-      const backendURL = 'http://localhost:3000';
+      const backendURL = 'http://localhost:3000'; // backend server url  
+
+      // const backendURL = 'https://shaddi.onrender.com'; // backend server url  
 
       const userDataRes = await fetch(`${backendURL}/user/getData`, {
         method: 'GET',
@@ -18,6 +20,8 @@ const Match = () => {
           Accept: 'application/json',
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
+          'Access-Control-Allow-Origin': 'https://findyourperfectmatch.netlify.app', // Specify allowed origin
+
         },
         credentials: 'include',
       });
@@ -113,7 +117,7 @@ const Match = () => {
           </tbody>
         </table>
       ) : (
-        <p>No matching records found.</p>
+        <p>No matching records found. <br/> Here Data is fetching from the Registered user on this website according to your country, state/provision, city and caste <br /> If No Record is found that means no user is fullfied your match... <br/> Keep visiting this website continuously you will get matched partner automatically once match user is found</p>
       )}
     </div>
   );

@@ -45,6 +45,8 @@ const Schema = mongoose.Schema({
     image: {
         type: String,        
     },  
+
+    imageUrl: String,
    
 
     tokens : [

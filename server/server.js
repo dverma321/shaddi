@@ -6,12 +6,17 @@ const cookieParser = require('cookie-parser');
 // Importing database connection
 require('./config/db');
 
+// Importing cloudinary 
+
+require('./cloudinary/cloudinary')
+
 const app = express();
 const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors({
   origin: 'http://localhost:5173', // Replace with the actual origin of your frontend application
+  // origin:"https://findyourperfectmatch.netlify.app",
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add other methods as needed
   credentials: true,
 }));

@@ -12,6 +12,7 @@ import About from './pages/About';
 import { ContactUs } from './pages/Contact';
 import Myprofile from './pages/Myprofile';
 import Match from './pages/Match';
+import ImageUpload from './pages/ImageUpload';
 
 import { initialState, reducer } from './reducer/useReducer';
 
@@ -43,6 +44,7 @@ const App = () => {
           <Route path="/logout" element={<Logout />} />
           <Route path="/heart" element={<Heart />} />
           <Route path="/yourmatching" element={<Match />} />
+          <Route path="/yourimage" element={<ImageUpload />} />
           
         </Routes>
       </BrowserRouter>

@@ -16,7 +16,7 @@ const Heart = () => {
           src: RedBalloons,
           top: `${Math.random() * 10}vh`, // Adjust top position to cover horizontally
           left: `${15 + i * 10}vw`, // Adjust left position to cover horizontally with spacing
-          speed: `${Math.random() * 10 + 10}s`,
+          speed: `${Math.random() * 20 + 20}s`,
         });
       }
 

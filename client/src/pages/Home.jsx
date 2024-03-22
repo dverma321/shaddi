@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import heartTreeImage from '../images/heart_tree.png';
+import candlelight from '../images/gif/candlelight.gif';
+
+import meeting from '../images/gif/meeting.gif';
 import { userContext } from '../App'; // Import the userContext
 import '../pages/Home.css';
 import '../components/Heart';
@@ -13,7 +16,9 @@ export const Home = () => {
   const callGetData = async () => {
     try {
       const token = localStorage.getItem('jwtoken');
-      const backendURL = 'http://localhost:3000';
+      
+      const backendURL = 'http://localhost:3000'; 
+      // const backendURL = 'https://shaddi.onrender.com'; 
 
       const res = await fetch(`${backendURL}/user/getData`, {
         method: 'GET',
@@ -21,6 +26,7 @@ export const Home = () => {
           Accept: 'application/json',
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
+          'Access-Control-Allow-Origin': 'https://findyourperfectmatch.netlify.app', // Specify allowed origin
         },
         credentials: 'include',
       });
@@ -48,9 +54,10 @@ export const Home = () => {
                 user ? (
                   <div>
                     {/* Check if user image is available */}
-                    {user.image ? (
+                    {user.imageUrl ? (
                       <div className='img-container'>
-                        <img className='imagedata' src={user.image} alt="User" />
+                        <img className='candlelight' src={candlelight} alt="candlelight" />
+                        <img className='imagedata' src={user.imageUrl} alt="User" />
                       </div>
                     ) : (
                       <div className='no-image-container'>
@@ -69,19 +76,20 @@ export const Home = () => {
                 )
               ) : (
                 <div>
-                  <h1 className="initial_home_user">Please Login to continue using this website</h1>
+                  <img className='img-fluid meeting' src={meeting} alt="meeting" />
+                  <h1 className="initial_home_user">Please Login to continue using this website <br/> Looking For Love? </h1>
                   <p className="description">Here you will find the perfect partner</p>
                 </div>
               )}
 
-              <Heart />
+              {/* <Heart />  */}
             </div>
           </div>
         </div>
       </div>
       <footer className="footer">
         <div className="container">
-          <p>Discover Your Perfect Match <br /> <strong>&copy; yourperfectpartner.com 2024</strong></p>
+          <p>Discover Your Perfect Match <br /> <strong>&copy; findyourperfectmatch.com 2024</strong></p>
         </div>
       </footer>
     </div>

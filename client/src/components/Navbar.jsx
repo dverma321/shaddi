@@ -32,6 +32,7 @@ export const Navbar = () => {
                     <li><NavLink to="/blog">Global Blog</NavLink></li>
                     <li><NavLink to="/about">My Information</NavLink></li>
                     <li><NavLink to="/myprofile">Update Profile</NavLink></li>
+                    {/* <li><NavLink to="/yourimage">Upload Photo</NavLink></li> */}
                     <li><NavLink to="/contact">Contact us</NavLink></li>
                     <li><NavLink to="/logout">Logout</NavLink></li>
 

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Signup from '../images/signup.webp';
+import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css';
+
 
 export const Registration = () => {
 
@@ -47,7 +49,9 @@ export const Registration = () => {
         }
 
         try {
-            const URI = 'http://localhost:3000/user/signup';
+            // const URI = 'http://localhost:3000/user/signup'; 
+
+            const URI = 'https://shaddi.onrender.com/user/signup'; 
 
             const response = await fetch(`${URI}`, {
                 method: 'POST',
@@ -70,8 +74,8 @@ export const Registration = () => {
                 console.log("Invalid Registration");
             }
             else {
-                window.alert(' Registration Email sent Successful please verify it');
-                console.log(" Registration Email sent Successful please verify it");
+                window.alert(' Registration Successful Please Login');
+                console.log(" Registration Successful please Login");
 
                 // Reset the form after successful registration
                 setUser({
@@ -96,11 +100,11 @@ export const Registration = () => {
     return (
         <>
             <div className="container-fluid">
-                <div className="row justify-content-center align-items-center">
+                <div className="row justify-content-center align-items-center mt-5">
                     <div className="col-md-6">
                         <div className="card">
                             <div className="card-body p-5">
-                                <h2 className="text-uppercase text-center mb-5">Create an account</h2>
+                                <h2 className="text-uppercase text-center mb-5"> Create Account For Free</h2>
 
                                 <div className='form-outline text-center mb-4'>
                                     <img src={Signup} alt='image' className='img-fluid' />
@@ -157,7 +161,7 @@ export const Registration = () => {
                                                 </div>
 
                                                 <div className="form-outline mb-4">
-                                                    <label className="form-label">Gender :</label>
+                                                    <label className="form-label"><i className="zmdi zmdi-account"></i> Gender :</label>
                                                     <input className="m-3" type="radio" id="male" name="gender" value="male"
                                                         checked={user.gender === "male"}
                                                         onChange={handleRadioChange}
@@ -211,7 +215,7 @@ export const Registration = () => {
                                 </form>
 
                                 <div className="form-outline text-center">
-                                    <NavLink to="/login" className="navlink_login"><i className="zmdi zmdi-flower"></i> I am Already Registered User</NavLink>
+                                    <NavLink to="/login" className="navlink_login"><i className="zmdi zmdi-tag"></i> I am Already Registered User</NavLink>
                                 </div>
 
                             </div>

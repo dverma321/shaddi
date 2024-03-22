@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'material-icons/iconfont/material-icons.css';
@@ -32,11 +33,15 @@ const Myprofile = () => {
     dob: '',
   });
 
+  const [errorMessage, setErrorMessage] = useState(''); // State for error message
+
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
         const token = localStorage.getItem('jwtoken'); // get token from local storage
-        const backendURL = 'http://localhost:3000'; // Backend / server URL fix
+        const backendURL = 'http://localhost:3000'; // Backend / server URL fix 
+
+        // const backendURL = 'https://shaddi.onrender.com'; // Backend / server URL fix 
 
         const response = await fetch(`${backendURL}/user/getData`, {
           method: 'GET',
@@ -99,7 +104,9 @@ const Myprofile = () => {
     try {
 
       const token = localStorage.getItem('jwtoken');
-      const backendURL = 'http://localhost:3000'; // Backend URL
+      const backendURL = 'http://localhost:3000'; // Backend URL 
+
+      // const backendURL = 'https://shaddi.onrender.com'; // Backend URL  
 
 
       const response = await fetch(`${backendURL}/user/updateProfile`, {
@@ -123,10 +130,73 @@ const Myprofile = () => {
     }
   }
 
+  const [imagePreview, setImagePreview] = useState(''); // State for image preview
+
 
   // setting state for image
 
   const [image, setImage] = useState([]);
+
+  // When Image is Selected then what response we get on the frontend
+
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+    console.log('Frontend Image Data : ', e.target.files[0]);
+
+    const selectedFile = e.target.files[0];
+
+    if (selectedFile && selectedFile.size > 1024 * 1024) {
+      setErrorMessage('File size exceeds the limit of 1MB');
+      setImage(null); // Reset image state
+    } else {
+      setErrorMessage(''); // Clear any existing error message
+      setImage(URL.createObjectURL(selectedFile)); // Set the image preview
+    
+
+    }
+
+  };
+
+  // uploading image on cloudify and mongodb database
+
+  const handleImageUpload = async (e) => {
+    e.preventDefault();
+
+    if (!image) {
+      alert('Please select an image.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', image); // this file name will be use in upload.single('file')
+
+    try {
+      const token = localStorage.getItem('jwtoken');
+      if (!token) {
+        alert('No token available. Please log in.');
+        return;
+      }
+
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      };
+
+      // Update the URL to your backend Cloudinary upload endpoint
+      const response = await axios.post('http://localhost:3000/user/cloudinaryUpload', formData, config);
+
+      console.log('Cloudinary response:', response.data);
+
+      alert('Image uploaded successfully');
+      setImage(null);
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      alert('Failed to upload image');
+    }
+  };
 
   // useEffect for image rendering from database
 
@@ -134,13 +204,17 @@ const Myprofile = () => {
     const fetchProfileImage = async () => {
       try {
         const token = localStorage.getItem('jwtoken');
-        const backendURL = 'http://localhost:3000'; // Backend URL for fetching image
+        const backendURL = 'http://localhost:3000'; // Backend URL for fetching image 
+
+        // const backendURL = 'https://shaddi.onrender.com'; // Backend URL for fetching image 
 
         const response = await fetch(`${backendURL}/user/getData`, {
           method: 'GET',
           headers: {
             Accept: 'application/json',
             Authorization: `Bearer ${token}`,
+            'Access-Control-Allow-Origin': 'https://findyourperfectmatch.netlify.app', // Specify allowed origin
+
           },
           credentials: 'include',
         });
@@ -148,7 +222,7 @@ const Myprofile = () => {
         const imageData = await response.json();
 
         if (response.ok) {
-          setImage(imageData.image || ''); // Assuming the image URL is returned from the backend
+          setImage(imageData.imageUrl || ''); // Assuming the image URL is returned from the backend
         }
       } catch (error) {
         console.error('Error fetching profile image:', error);
@@ -159,71 +233,6 @@ const Myprofile = () => {
     fetchProfileImage();
   }, []);
 
-  // uploading images
-
-  async function uploadImage(event) {
-    event.preventDefault();
-
-    const token = localStorage.getItem('jwtoken');
-    const URI = 'http://localhost:3000';
-
-    try {
-
-      const response = await fetch(`${URI}/user/upload-image`, {
-        method: 'POST',
-        crossDomain: true,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          base64: image
-        })
-      })
-
-      const data = await response.json();
-      window.alert("Image Saved Successfully...");
-
-      console.log("Image Sent Successfully", data)
-      setImage({
-        image: ""
-      })
-    }
-
-    catch (err) {
-
-      console.log("Image upload Error :", err)
-
-    }
-
-  }
-
-  // function for choosing image
-
-  function convertToBase64(e) {
-    console.log(e);
-    var reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-
-    reader.onload = () => {
-      console.log(reader.result);
-      setImage(reader.result);
-    }
-
-    reader.onerror = (err) => {
-      console.log("Image upload Error : ", err)
-    }
-
-    // Format the date input value as DD-MM-YYYY
-    const inputDate = e.target.value;
-    const [year, month, day] = inputDate.split('-');
-    const formattedDate = `${day}-${month}-${year}`;
-
-    // Update the form data state with the formatted date
-    setFormData({ ...formData, dob: formattedDate });
-
-  }
 
 
   return (
@@ -244,14 +253,11 @@ const Myprofile = () => {
 
                   </div>
                   <div class="col-md-6">
-                    <div class="form-outline mb-4">
-                      <label class="form-label" for="photoupload"><i class="zmdi zmdi-lock"></i> Upload Photo</label>
-                      <input name="image" accept="image/*" type="file" onChange={convertToBase64} class="form-control form-control-lg" required />
-                    </div>
-
-                    <div class="d-flex justify-content-center">
-                      <button class="btn btn-primary gradient-button" onClick={uploadImage}>Upload Image</button>
-                    </div>
+                    <form onSubmit={handleImageUpload}>
+                      <input type="file" onChange={handleImageChange} />
+                      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} {/* Display error message */}
+                      <button type="submit">Upload Image</button>
+                    </form>
 
 
                   </div>

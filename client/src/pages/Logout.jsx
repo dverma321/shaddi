@@ -12,7 +12,9 @@ const Logout = () => {
     const logoutUser = async () => {
       try {
         // Make a request to the logout endpoint on your server
-        const URI = 'http://localhost:3000';
+        const URI = 'http://localhost:3000'; 
+        
+        // const URI = 'https://shaddi.onrender.com'; 
         
         const response = await fetch(`${URI}/user/logout`, {
           method: 'GET',

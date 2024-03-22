@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { userContext } from '../App';
 import '../pages/Login.css';
 import loginImage from '../images/login.jpg'
+import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css';
+
 
 export const Login = () => {
   const [email, setEmail] = useState('');
@@ -19,6 +21,8 @@ export const Login = () => {
     }
   
     const URI = 'http://localhost:3000/user/signin';
+    
+    // const URI = 'https://shaddi.onrender.com/user/signin'; 
   
     try {
       const res = await fetch(URI, {
@@ -95,7 +99,7 @@ export const Login = () => {
                 </form>
 
                 <div className="form-outline">
-                  <NavLink to="/register" className="navlink_login"><i className="zmdi zmdi-flower"></i> create account for free</NavLink>
+                  <NavLink to="/register" className="navlink_login"><i className="zmdi zmdi-flower"></i> Register account for free</NavLink>
                 </div>
               </div>
             </div>
