@@ -14,14 +14,6 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Middleware
-<<<<<<< HEAD
-app.use(cors({
-  origin: 'http://localhost:5173', // Replace with the actual origin of your frontend application
-  // origin:"https://findyourperfectmatch.netlify.app",
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add other methods as needed
-  credentials: true,
-}));
-=======
 
 app.use(cors(
     {
@@ -32,7 +24,6 @@ app.use(cors(
     }
 ));
 
->>>>>>> d2034a4247ee034d6c57286cd323686db273bcb5
 app.use(express.json());
 app.use(cookieParser());
 
