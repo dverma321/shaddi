@@ -46,7 +46,11 @@ const Schema = mongoose.Schema({
         type: String,        
     },  
 
+<<<<<<< HEAD
     imageUrl: String,
+=======
+    imageData: String,
+>>>>>>> d2034a4247ee034d6c57286cd323686db273bcb5
    
 
     tokens : [

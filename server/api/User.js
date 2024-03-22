@@ -3,13 +3,20 @@ const bcrypt = require('bcrypt')
 const path = require('path');  // Add this line to import the 'path' module
 const jwt = require('jsonwebtoken'); // Import jsonwebtoken
 const moment = require('moment'); // for Date Format
+<<<<<<< HEAD
 const multer = require('multer');
 const fs = require('fs');
+=======
+const cors = require('cors');
+const fs = require('fs');
+const multer = require('multer');
+>>>>>>> d2034a4247ee034d6c57286cd323686db273bcb5
 
 const authenticate = require('../middleware/authentication');
 
 const router = express.Router()
 
+<<<<<<< HEAD
 // solving the problem of cors
 
 // router.use(cors(
@@ -20,6 +27,16 @@ const router = express.Router()
 //       optionsSuccessStatus: 204     // Respond with a 204 status code for preflight requests
 //   }
 // ));
+=======
+router.use(cors(
+    {
+        origin:"https://findyourperfectmatch.netlify.app",
+        methods:'GET,HEAD,PUT,PATCH,POST,DELETE',
+        credentials: true, // set the cookie true
+        optionsSuccessStatus: 204     // Respond with a 204 status code for preflight requests
+    }
+));
+>>>>>>> d2034a4247ee034d6c57286cd323686db273bcb5
 
 //getting User 
 
@@ -545,8 +562,17 @@ router.post("/signin", async (req, res) => {
     // storing token in the cookie
 
     res.cookie("jwtoken", token, {
+<<<<<<< HEAD
       expires: new Date(Date.now() + 25892000000),
       httpOnly: true
+=======
+        expires: new Date(Date.now() + 25892000000),
+        httpOnly: true,         
+        secure: true,
+        sameSite: 'none',
+        path: '/',
+        credentials: 'include'
+>>>>>>> d2034a4247ee034d6c57286cd323686db273bcb5
     });
 
 
@@ -569,6 +595,7 @@ router.post("/signin", async (req, res) => {
 // Logout route
 
 router.get('/logout', (req, res) => {
+<<<<<<< HEAD
   // Simply clear the token on the client side
   res.clearCookie('jwtoken', {
     path: '/'
@@ -577,6 +604,23 @@ router.get('/logout', (req, res) => {
     status: "SUCCESS",
     message: "Logout Successful"
   });
+=======
+    // Simply clear the token on the client side
+    res.clearCookie('jwtoken', {
+        path: '/',
+         httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+        credentials: 'include'
+    })
+    req.rootUser = null;
+    console.log("user logout successfully...");
+    
+    res.json({
+        status: "SUCCESS",
+        message: "Logout Successful"
+    });
+>>>>>>> d2034a4247ee034d6c57286cd323686db273bcb5
 });
 
 
@@ -725,11 +769,33 @@ router.get('/get-image', authenticate, async (req, res) => {
       });
     }
 
+<<<<<<< HEAD
     // Send the image data in the response
     res.status(200).json({
       status: "SUCCESS",
       message: "Image read successfully",
       data: user.image
+=======
+
+// Logout route
+
+router.get('/logout1', (req, res) => {
+    // Clear the session or token on the server side
+    // Example for clearing a session
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error destroying session:', err);
+            return res.json({
+                status: 'FAILED',
+                message: 'Error during logout'
+            });
+        }
+        res.clearCookie('connect.sid'); // Clear the session cookie
+        res.json({
+            status: 'SUCCESS',
+            message: 'Logout successful'
+        });
+>>>>>>> d2034a4247ee034d6c57286cd323686db273bcb5
     });
   } catch (err) {
     console.log("Error while reading image:", err);
@@ -739,6 +805,82 @@ router.get('/get-image', authenticate, async (req, res) => {
     });
   }
 });
+
+
+// multer image upload testing
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './uploads/'); // Save uploaded files to 'uploads' directory
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}_${(file.originalname)}`); // Unique filename
+  },
+});
+
+const upload = multer({ storage });
+
+router.post('/multerUpload', authenticate, upload.single('image'), async (req, res) => {
+  try {
+
+
+    const userId = req.rootUser._id; // get the authenticated id from the jwtoken if user is login
+
+    const user = await User.findOne({ _id: userId });
+    if (!user) {
+        return res.status(404).json({
+            status: "FAILED",
+            message: "User not found"
+        });
+    }
+
+    console.log("Image Data on the Backend : ", req.file);
+
+    user.imageData = req.file.filename;
+
+    await user.save();
+
+    res.status(201).json({ message: 'Image uploaded successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// getting multer image testing
+
+
+router.get('/multerImageData', authenticate, async (req, res) => {
+    try {
+  
+  
+      const userId = req.rootUser._id; // get the authenticated id from the jwtoken if user is login
+  
+      const user = await User.findOne({ _id: userId });
+      if (!user) {
+          return res.status(404).json({
+              status: "FAILED",
+              message: "User not found"
+          });
+      }
+
+      const imagePath = path.join(__dirname, '..', 'uploads', user.imageData); // Assuming 'uploads' directory
+      
+      // error handling if image is not found
+
+      if (fs.existsSync(imagePath)) {
+        res.sendFile(imagePath);
+      } else {
+        res.status(404).json({ error: 'Image not found' });
+      }
+  
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+
 
 
 
