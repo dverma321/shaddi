@@ -1,4 +1,4 @@
-const mongoose =  require('mongoose')
+const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken'); // Import jsonwebtoken
 
 
@@ -17,16 +17,16 @@ const Schema = mongoose.Schema({
     country: String,
     state: String,
     city: String,
-    pincode: String,   
+    pincode: String,
     alternateMobileNumber: Number,
 
     // personal Data 
 
-    dob: String,    
+    dob: String,
     height: Number,
     weight: Number,
     community: String,
-    caste: String,    
+    caste: String,
     bodyColor: String,
     drink: String,
     smoke: String,
@@ -36,24 +36,24 @@ const Schema = mongoose.Schema({
 
     // work Data
 
-    work: String,    
+    work: String,
     professionalStatus: String,
     salary: Number,
 
     // image upload , if error like jwt token is undefined then comment image
 
     image: {
-        type: String,        
-    },  
+        type: String,
+    },
 
-<<<<<<< HEAD
+
     imageUrl: String,
-=======
-    imageData: String,
->>>>>>> d2034a4247ee034d6c57286cd323686db273bcb5
-   
 
-    tokens : [
+    imageData: String,
+
+
+
+    tokens: [
         {
             token: {
                 type: String,
@@ -62,30 +62,29 @@ const Schema = mongoose.Schema({
         }
 
     ]
-    
+
 })
 
 // we are generating token
 
-Schema.methods.generateAuthToken = async function()
-{
-    try{
+Schema.methods.generateAuthToken = async function () {
+    try {
         let token = jwt.sign(
-              {
-                _id:this._id
-                
-              },
-              process.env.JWT_SECRET
-             
-            ); // token generated
+            {
+                _id: this._id
 
-            this.tokens = this.tokens.concat({token:token}); // token stored in the database
+            },
+            process.env.JWT_SECRET
 
-            await this.save();
+        ); // token generated
 
-            return token;
+        this.tokens = this.tokens.concat({ token: token }); // token stored in the database
+
+        await this.save();
+
+        return token;
     }
-    catch(err){
+    catch (err) {
         console.log("Catch Error :", err);
 
     }

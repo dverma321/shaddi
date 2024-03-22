@@ -130,31 +130,27 @@ const Myprofile = () => {
     }
   }
 
-  const [imagePreview, setImagePreview] = useState(''); // State for image preview
-
 
   // setting state for image
 
   const [image, setImage] = useState([]);
 
+  const [imageUrl, setImageUrl] = useState('');
+
   // When Image is Selected then what response we get on the frontend
 
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
-    console.log('Frontend Image Data : ', e.target.files[0]);
-
     const selectedFile = e.target.files[0];
 
     if (selectedFile && selectedFile.size > 1024 * 1024) {
       setErrorMessage('File size exceeds the limit of 1MB');
       setImage(null); // Reset image state
+      setImageUrl(''); // Reset image URL
     } else {
       setErrorMessage(''); // Clear any existing error message
-      setImage(URL.createObjectURL(selectedFile)); // Set the image preview
-    
-
+      setImage(selectedFile); // Set the selected file as the image
+      setImageUrl(URL.createObjectURL(selectedFile)); // Set the image preview URL
     }
-
   };
 
   // uploading image on cloudify and mongodb database
@@ -248,7 +244,7 @@ const Myprofile = () => {
                   <div class="col-md-6">
 
                     <div className=" d-flex justify-content-center align-items-center ">
-                      {image ? <img className="img-fluid userimage" width="200" height="200" src={image} alt="Profile" /> : <div className="userimage"></div>}
+                      {image ? <img className="img-fluid userimage" width="200" height="200" src={imageUrl} alt="Profile" /> : <div className="userimage"></div>}
                     </div>
 
                   </div>

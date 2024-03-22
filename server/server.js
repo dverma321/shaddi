@@ -6,10 +6,6 @@ const cookieParser = require('cookie-parser');
 // Importing database connection
 require('./config/db');
 
-// Importing cloudinary 
-
-require('./cloudinary/cloudinary')
-
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -17,7 +13,7 @@ const port = process.env.PORT || 3000;
 
 app.use(cors(
     {
-        origin:"https://findyourperfectmatch.netlify.app",
+        origin:"http://localhost:5173",
         methods:'GET,HEAD,PUT,PATCH,POST,DELETE',
         credentials: true, // set the cookie true
         optionsSuccessStatus: 204     // Respond with a 204 status code for preflight requests
