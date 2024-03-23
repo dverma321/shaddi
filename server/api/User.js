@@ -849,8 +849,6 @@ router.get('/multerImageData', authenticate, async (req, res) => {
   
 // For posting/uploading image on cloudinary 
 
-// For posting/uploading image on cloudinary 
-
 const cloudinary = require('cloudinary').v2;
 
 
