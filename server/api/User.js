@@ -849,14 +849,16 @@ router.get('/multerImageData', authenticate, async (req, res) => {
   
 // For posting/uploading image on cloudinary 
 
+// For posting/uploading image on cloudinary 
 
 const cloudinary = require('cloudinary').v2;
 
+
 // Cloudinary configuration
-cloudinary.config({ 
-  cloud_name: process.env.cloudinary_name, 
-  api_key: process.env.cloudinary_apikey, 
-  api_secret: process.env.cloudinary_secretkey 
+cloudinary.config({
+  cloud_name: process.env.cloudinary_name,
+  api_key: process.env.cloudinary_apikey,
+  api_secret: process.env.cloudinary_secretkey
 });
 
 // Use memory storage for uploading files
@@ -872,8 +874,25 @@ router.post('/cloudinaryUpload', authenticate, upload.single('file'), async (req
     // Convert the Buffer to base64 string
     const base64Image = req.file.buffer.toString('base64');
 
+    // Get the public ID of the previous image from the user's profile
+    const user = await User.findById(req.rootUser._id);
+    const previousImagePublicId = user.imageUrl ? `shaddi/${user.imageUrl.split('/').pop().split('.')[0]}` : null;
+    console.log("Previous Image : ", previousImagePublicId);
+
+    // Delete the previous image if it exists
+    if (previousImagePublicId) {
+      try {
+        const deletionResult = await cloudinary.uploader.destroy(previousImagePublicId);
+        console.log('Deletion result:', deletionResult);
+      } catch (deletionError) {
+        console.error('Error deleting previous image from Cloudinary:', deletionError);
+        // Handle the deletion error as needed
+      }
+    }
+
+
     const result = await cloudinary.uploader.upload(`data:${req.file.mimetype};base64,${base64Image}`, {
-      folder: "shaddi", // Specify the folder in Cloudinary
+      folder: 'shaddi', // Specify the folder in Cloudinary
       use_filename: true, // Use the original filename
     });
 
@@ -894,9 +913,6 @@ router.post('/cloudinaryUpload', authenticate, upload.single('file'), async (req
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
-
-
 
 
 
