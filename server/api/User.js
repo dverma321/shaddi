@@ -64,9 +64,9 @@ transporter.verify((error, success) => {
     }
 })
 
-// signup
+// signup using verification method
 
-router.post("/signup1", (req, res) => {
+router.post("/signup", (req, res) => {
 
     let { name, email, password, confirmPassword, gender, phone } = req.body.user;
     
@@ -203,7 +203,7 @@ router.post("/signup1", (req, res) => {
 
 // Testing purpose signup
 
-router.post('/signup', async (req, res, next) => {
+router.post('/signup_testing', async (req, res, next) => {
     try {
       // Extract user data from request body
       const { name, email, phone, gender, password, confirmPassword } = req.body.user;
