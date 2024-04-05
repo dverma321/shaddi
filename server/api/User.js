@@ -66,7 +66,7 @@ transporter.verify((error, success) => {
 
 // signup using verification method
 
-router.post("/signup", (req, res) => {
+router.post("/signup_testing", (req, res) => {
 
     let { name, email, password, confirmPassword, gender, phone } = req.body.user;
     
@@ -203,7 +203,7 @@ router.post("/signup", (req, res) => {
 
 // Testing purpose signup
 
-router.post('/signup_testing', async (req, res, next) => {
+router.post('/signup', async (req, res, next) => {
     try {
       // Extract user data from request body
       const { name, email, phone, gender, password, confirmPassword } = req.body.user;
@@ -440,7 +440,7 @@ router.get("/verified", (req, res) => {
 
 
 // Signin route with JWT
-router.post("/signin", async (req, res) => {
+router.post("/signin_testing", async (req, res) => {
     let { email, password } = req.body;
   
     email = email.trim();
@@ -512,7 +512,7 @@ router.post("/signin", async (req, res) => {
 
 // Testing purpose signin
 
-router.post("/signin_testing", async (req, res) => {
+router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
