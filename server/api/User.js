@@ -440,7 +440,7 @@ router.get("/verified", (req, res) => {
 
 
 // Signin route with JWT
-router.post("/signin1", async (req, res) => {
+router.post("/signin", async (req, res) => {
     let { email, password } = req.body;
   
     email = email.trim();
@@ -512,7 +512,7 @@ router.post("/signin1", async (req, res) => {
 
 // Testing purpose signin
 
-router.post("/signin", async (req, res) => {
+router.post("/signin_testing", async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
