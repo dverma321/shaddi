@@ -15,15 +15,15 @@ export const Login = () => {
 
   const loginUser = async (e) => {
     e.preventDefault();
-  
+
     if (!email || !password) {
       return window.alert("Please Fill all the details...");
     }
-  
+
     const URI = 'http://localhost:3000/user/signin';
-    
+
     // const URI = 'https://shaddi.onrender.com/user/signin'; 
-  
+
     try {
       const res = await fetch(URI, {
         method: "POST",
@@ -39,7 +39,7 @@ export const Login = () => {
 
 
       const data = await res.json();
-  
+
       if (res.status === 200 && data.status === "SUCCESS") {
         const { token, userId } = data;
 
@@ -51,9 +51,20 @@ export const Login = () => {
 
         // Redirect to user's profile or another authenticated route
         navigation('/'); // navigating to Home Page
-        
+
         window.alert("Login Successfully");
-      } else {
+      }
+      else if (res.status === 401) {
+        window.alert("Email Invalid Credentials...")
+
+      }
+
+      else if (res.status === 402) {
+        window.alert("Email is not verified yet...");
+
+      }
+
+      else {
         window.alert("Invalid Credential...");
       }
     } catch (error) {
@@ -61,7 +72,7 @@ export const Login = () => {
       // Handle other errors as needed
     }
   };
- 
+
 
   return (
     <div className="mask d-flex align-items-center h-100 gradient-custom-3 mt-5">
@@ -82,15 +93,15 @@ export const Login = () => {
                   <div className="mb-4 input-container">
                     <label className="form-label" htmlFor="signinformyouremail"><i className="zmdi zmdi-email"></i> Email</label>
                     <input type="email" name='email' id="signinformyouremail" className="form-control form-control-lg" placeholder='Enter your email' autoComplete='off'
-                     value={email}
-                     onChange= { (e) => setEmail(e.target.value)} required />
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)} required />
                   </div>
 
                   <div className="mb-4 input-container">
                     <label className="form-label" htmlFor="signinformyourpassword"><i className="zmdi zmdi-lock"></i> Password</label>
                     <input type="password" name='password' id="signinformyourpassword" className="form-control form-control-lg" placeholder='Enter password' autoComplete='off'
-                     value={password}
-                     onChange= { (e) => setPassword(e.target.value)} required />
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)} required />
                   </div>
 
                   <div className="form-group form-button">

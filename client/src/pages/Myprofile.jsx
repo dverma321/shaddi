@@ -55,10 +55,13 @@ const Myprofile = () => {
 
 
         const data = await response.json();
-
         if (response.ok) {
+
+          const parts = data.dob.split('-');
+          const formattedDob = new Date(`${parts[2]}-${parts[1]}-${parts[0]}`).toISOString().split('T')[0];
+          
           setFormData({
-            ...formData,
+            ...formData,            
 
             country: data.country || '',
             state: data.state || '',
@@ -73,7 +76,7 @@ const Myprofile = () => {
             work: data.work || '',
             salary: data.salary || '',
             caste: data.caste || '',
-            dob: data.dob || '',
+            dob: formattedDob || '',
             community: data.community || '',
           });
         }
@@ -182,12 +185,15 @@ const Myprofile = () => {
       };
 
       // Update the URL to your backend Cloudinary upload endpoint
+
       const response = await axios.post('http://localhost:3000/user/cloudinaryUpload', formData, config);
+
+      // const response = await axios.post('https://shaddi.onrender.com/user/cloudinaryUpload', formData, config);
 
       console.log('Cloudinary response:', response.data);
 
       alert('Image uploaded successfully');
-      setImage(null);
+      // setImage(null);
     } catch (error) {
       console.error('Error uploading image:', error);
       alert('Failed to upload image');
@@ -200,6 +206,7 @@ const Myprofile = () => {
     const fetchProfileImage = async () => {
       try {
         const token = localStorage.getItem('jwtoken');
+        
         const backendURL = 'http://localhost:3000'; // Backend URL for fetching image 
 
         // const backendURL = 'https://shaddi.onrender.com'; // Backend URL for fetching image 
@@ -218,7 +225,7 @@ const Myprofile = () => {
         const imageData = await response.json();
 
         if (response.ok) {
-          setImage(imageData.imageUrl || ''); // Assuming the image URL is returned from the backend
+          setImageUrl(imageData.imageUrl || ''); // Assuming the image URL is returned from the backend
         }
       } catch (error) {
         console.error('Error fetching profile image:', error);

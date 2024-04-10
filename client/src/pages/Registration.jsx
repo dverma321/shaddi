@@ -1,11 +1,22 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Signup from '../images/signup.webp';
 import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css';
 
+// import { userContext } from '../App';
+
+
+import '../pages/Registration.css';
+
 
 export const Registration = () => {
+
+    const navigation = useNavigate();
+
+
+    // const { dispatch } = useContext(userContext); // For getting the state of dispatch true or false for automatic login 
+
 
     const [user, setUser] = useState({
         name: "",
@@ -38,9 +49,9 @@ export const Registration = () => {
 
         event.preventDefault();
 
-        const { name, email, phone, gender, password, confirmPassword } = user;
+        const { name, email, gender, password, confirmPassword } = user;
 
-        if (!name || !email || !phone || !gender || !password || !confirmPassword) {
+        if (!name || !email  || !gender || !password || !confirmPassword) {
             return window.alert("Please fill all the fields...")
         }
 
@@ -49,9 +60,9 @@ export const Registration = () => {
         }
 
         try {
-            // const URI = 'http://localhost:3000/user/signup'; 
+            const URI = 'http://localhost:3000/user/signup';
 
-            const URI = 'https://shaddi.onrender.com/user/signup'; 
+            // const URI = 'https://shaddi.onrender.com/user/signup'; 
 
             const response = await fetch(`${URI}`, {
                 method: 'POST',
@@ -63,21 +74,39 @@ export const Registration = () => {
                     user
                     // base64: image
                 }),
+
+                // credentials: 'include', // Include this line  for automatic login or need access to any other tab
+
             });
 
 
             const data = await response.json();
             console.log("Data : ", data)
 
+            const { token, userId } = data;
+
+
             if (data.status === "FAILED" || !data) {
                 window.alert('Invalid Registration  or Email/Phone number already exits');
                 console.log("Invalid Registration");
             }
             else {
-                window.alert(' Registration Successful Please Login');
-                console.log(" Registration Successful please Login");
+
+                // // Store the token in localStorage
+                // localStorage.setItem('jwtoken', token);
+
+                // // Dispatch user action to update context
+                // dispatch({ type: "USER", payload: true });
+
+
+                window.alert(' Registration Successful Please Verify your Email');
+                console.log(" Registration Successful please check your Email");
+
+                // navigation("/myprofile"); // Navigate to another page after successful verification and storing 
+
 
                 // Reset the form after successful registration
+
                 setUser({
                     name: "",
                     email: "",
@@ -99,7 +128,7 @@ export const Registration = () => {
 
     return (
         <>
-            <div className="container-fluid">
+            <div className="container-fluid customcss" >
                 <div className="row justify-content-center align-items-center mt-5">
                     <div className="col-md-6">
                         <div className="card">
@@ -151,14 +180,14 @@ export const Registration = () => {
                                                     />
                                                 </div>
 
-                                                <div class="form-outline mb-4">
+                                                {/* <div class="form-outline mb-4">
                                                     <label class="form-label" for="labelphone"><i class="zmdi zmdi-phone"></i> Phone</label>
                                                     <input type="text" name="phone" id="formphone" class="form-control form-control-lg" placeholder='Enter your number'
                                                         value={user.phone}
                                                         onChange={handleChange}
 
                                                         required />
-                                                </div>
+                                                </div> */}
 
                                                 <div className="form-outline mb-4">
                                                     <label className="form-label"><i className="zmdi zmdi-account"></i> Gender :</label>
@@ -191,14 +220,7 @@ export const Registration = () => {
                                                         value={user.confirmPassword}
                                                         onChange={handleChange}
                                                         required />
-                                                </div>
-
-                                                {/* <div class="form-outline mb-4">
-                                                    <label class="form-label" for="photoupload"><i class="zmdi zmdi-lock"></i> Upload Photo</label>
-                                                    <input name="image" accept='image/*'  type='file' onChange={convertToBase64} class="form-control form-control-lg"
-                                                       
-                                                    required />
-                                                </div> */}
+                                                </div>   
 
 
 
@@ -215,6 +237,10 @@ export const Registration = () => {
                                 </form>
 
                                 <div className="form-outline text-center">
+                                    <NavLink to="/phonesignup" className="navlink_login"><i className="zmdi zmdi-tag"></i> Register using Mobile Number</NavLink>
+                                </div>
+
+                                <div className="form-outline text-center mt-3">
                                     <NavLink to="/login" className="navlink_login"><i className="zmdi zmdi-tag"></i> I am Already Registered User</NavLink>
                                 </div>
 

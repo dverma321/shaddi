@@ -13,7 +13,8 @@ const port = process.env.PORT || 3000;
 
 app.use(cors(
     {
-        origin:"http://localhost:5173",
+        // origin:"http://localhost:5173",
+        origin:"https://findyourperfectmatch.netlify.app",
         methods:'GET,HEAD,PUT,PATCH,POST,DELETE',
         credentials: true, // set the cookie true
         optionsSuccessStatus: 204     // Respond with a 204 status code for preflight requests
@@ -26,7 +27,9 @@ app.use(cookieParser());
 
 // Routes
 const userRouter = require('./api/User');
+const otpRouter = require('./api/Otp.js'); 
 app.use('/user', userRouter);
+app.use('/otp', otpRouter); 
 
 // Error handling middleware
 app.use((err, req, res, next) => {

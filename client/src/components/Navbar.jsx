@@ -29,7 +29,7 @@ export const Navbar = () => {
 
                     <li><NavLink to="/">Home</NavLink></li>
                     <li><NavLink to="/yourmatching">Find Partner</NavLink></li>
-                    <li><NavLink to="/blog">Global Blog</NavLink></li>
+                    <li><NavLink to="/chatting">Global Chats</NavLink></li>
                     <li><NavLink to="/about">My Information</NavLink></li>
                     <li><NavLink to="/myprofile">Update Profile</NavLink></li>
                     {/* <li><NavLink to="/yourimage">Upload Photo</NavLink></li> */}

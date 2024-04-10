@@ -10,15 +10,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@firebase/auth": "^1.7.0",
+    "@firebase/firestore": "^4.5.1",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "cloudinary-react": "^1.8.1",
+    "firebase": "^10.10.0",
     "jwt-decode": "^4.0.0",
     "material-design-iconic-font": "^2.2.0",
     "material-icons": "^1.13.12",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
+    "react-phone-number-input": "^3.3.12",
     "react-router-dom": "^6.22.0"
   },
   "devDependencies": {

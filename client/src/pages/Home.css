@@ -6,7 +6,7 @@
 
 .overlay-text {
   position: absolute;
-  top: 50%;
+  top: 1%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
@@ -31,9 +31,12 @@
   background: linear-gradient(to bottom right, red, white);
   /* Adjust the gradient direction as needed */
   color: white;
-  padding: 20px 0;
+  padding: 10px 0;
+  
   /* Add padding to the footer content */
   text-align: center;
+  height: auto;
+   
 }
 
 .meeting {
@@ -67,6 +70,11 @@ h1.home_user {
   letter-spacing: 2px;
   text-transform: uppercase;
 
+
+}
+
+.welcome-text {
+  
   /* gradient effect on text  */
 
   background-image: linear-gradient(to right, #000, lightcoral);
@@ -74,6 +82,13 @@ h1.home_user {
   /* Apply gradient to text */
   -webkit-text-fill-color: transparent;
 
+  font-weight: bold; /* Bold font weight */
+  text-transform: uppercase;
+}
+
+.user-name {
+  color: #000; /* Text color for user name */
+  font-weight: normal; /* Normal font weight */
 }
 
 h1.initial_home_user {
@@ -133,6 +148,13 @@ p.description {
     font-size: 22px;
   }
 
+  
+.user-name {
+  color: #000; /* Text color for user name */
+  font-weight: normal; /* Normal font weight */
+}
+
+
 
   h1.initial_home_user {
     padding-top: 2%;
@@ -185,7 +207,7 @@ p.description {
     font-size: 20px;
   }
 
-
+  
   h1.initial_home_user {
 
     text-transform: uppercase;
@@ -194,6 +216,12 @@ p.description {
     letter-spacing: 0;
 
   }
+
+  
+.user-name {
+  color: #000; /* Text color for user name */
+  font-weight: normal; /* Normal font weight */
+}
 
   
 .imagedata {
@@ -205,18 +233,21 @@ p.description {
   /* Gradient border color */
   border-image: linear-gradient(to right, black, red);
   border-image-slice: 1;
+  
+  margin-top: 1%;
   /* Ensure the entire border is covered by the gradient */
 }
 
 
-  .meeting {
-    margin-top: 15%;
-  }
-
   .candlelight{
     height: 50%;
     width: 50%;
-    margin-top: 20%;
+    margin-top: 1%;
+  }
+
+  
+  .meeting {
+    margin-top: 1%;
   }
 
 
@@ -228,7 +259,7 @@ p.description {
   .overlay-text {
     font-size: 14px;
     /* Further reduce font size for smaller screens */
-    margin-top: 1%;
+   
     /* Increase top margin even more */
   }
 
@@ -252,6 +283,7 @@ p.description {
 
   .footer {
     margin-top: 55%;
+    font-size: 14px;
   }
 }
 
@@ -265,7 +297,7 @@ p.description {
     /* Allow text to wrap */
     max-width: 100%;
     /* Limit the width of the text container */
-    margin-top: 12%;
+    margin-top: 1%;
   }
 
   .meeting {
@@ -273,13 +305,15 @@ p.description {
     width: 250px;
     height: 250px;
     margin-top: 10%;
+    border-radius: 2px solid #000;
 
   }
 
   .candlelight{
     height: 50%;
     width: 50%;
-    margin-top: 5%;
+    margin-top: 10%;
+
   }
 
   
@@ -287,6 +321,7 @@ p.description {
   height: 40%;
   width: 40%;
   margin-top: 10%;
+
   
   border-style: solid;
 
@@ -299,7 +334,8 @@ p.description {
 
 
   .footer {
-    margin-top: 55%;
+    margin-top: 50%;
+
   }
 
 }
@@ -307,6 +343,7 @@ p.description {
 /* Larger Screen Display above 1024 px  */
 
 @media (min-width: 1025px) {
+
   h1.initial_home_user {
     font-size: 18px;
     /* Adjust font size for medium-sized screens */
@@ -314,7 +351,7 @@ p.description {
     /* Allow text to wrap */
     max-width: 100%;
     /* Limit the width of the text container */
-    margin-top: 12%;
+    margin-top: 1%;
   }
 
   .meeting {
@@ -327,13 +364,14 @@ p.description {
   .candlelight{
     height: 50%;
     width: 50%;
+    margin-top: 30%;
   }
 
     
 .imagedata {
   height: 40%;
   width: 40%;
-  margin-top: 10%;  
+  margin-top: 30%;  
   border-style: solid;
   /* Gradient border color */
   border-image: linear-gradient(to right, black, red);
@@ -363,7 +401,7 @@ h3.home_work {
 }
 
   .footer {
-    margin-top: 30%;
+    margin-top: 1%;
   }
 
 }

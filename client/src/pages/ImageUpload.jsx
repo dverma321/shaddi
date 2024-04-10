@@ -53,7 +53,8 @@ const ImageUpload = () => {
       };
 
       // Update the URL to your backend Cloudinary upload endpoint
-      const response = await axios.post('http://localhost:3000/user/cloudinaryUpload', formData, config);
+      // const response = await axios.post('http://localhost:3000/user/cloudinaryUpload', formData, config);
+      const response = await axios.post('https://shaddi.onrender.com/user/cloudinaryUpload', formData, config);
 
       console.log('Cloudinary response:', response.data);
 
@@ -82,7 +83,8 @@ const ImageUpload = () => {
         };
 
         // Fetch the Cloudinary image URL from your backend
-        const response = await axios.get('http://localhost:3000/user/cloudinaryImageData', config);
+        // const response = await axios.get('http://localhost:3000/user/cloudinaryImageData', config);
+        const response = await axios.get('https://shaddi.onrender.com/user/cloudinaryImageData', config);
         console.log("Response for getting image : ", response);
         setImageSrc(response.data.imageUrl);
       } catch (error) {

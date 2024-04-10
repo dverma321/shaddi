@@ -42,16 +42,16 @@ const Schema = mongoose.Schema({
 
     // image upload , if error like jwt token is undefined then comment image
 
-    image: {
-        type: String,
-    },
+    // image: {
+    //     type: String,
+    // },
 
 
     imageUrl: String,
 
-    imageData: String,
+    // imageData: String,
 
-
+    createdAt: { type: Date, default: Date.now }, // Adding createdAt field with default value as current date/time
 
     tokens: [
         {
@@ -81,6 +81,7 @@ Schema.methods.generateAuthToken = async function () {
         this.tokens = this.tokens.concat({ token: token }); // token stored in the database
 
         await this.save();
+        console.log("Token Generated : ", token);
 
         return token;
     }

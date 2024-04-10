@@ -65,8 +65,16 @@ export const Home = () => {
                       </div>
                     )}
 
-                    <h1 className='home_user'>Welcome: {user.name}</h1>
-                    <h3 className='home_work'>Professional: {user.work}</h3>
+                    {/* <h1 className='home_user'>Welcome: <span className=''>{user.name}</span></h1> */}
+                    <h1 class='home_user'>
+                      <span class='welcome-text'>Welcome: </span>
+                      <span class='user-name'>{user.name}</span>
+                    </h1>
+
+                    <h3 className='home_user'>
+                      <span class='welcome-text'>Professional: </span>
+                      <span class='user-name'>{user.work}</span>
+                    </h3>
                     <p className="description">Keep Visiting this website to find your perfect partner based on data you provided</p>
                   </div>
                 ) : (
@@ -88,7 +96,7 @@ export const Home = () => {
         </div>
       </div>
       <footer className="footer">
-        <div className="container">
+        <div className="container_footer">
           <p>Discover Your Perfect Match <br /> <strong>&copy; findyourperfectmatch.com 2024</strong></p>
         </div>
       </footer>
