@@ -13,7 +13,6 @@ const port = process.env.PORT || 3000;
 
 app.use(cors(
     {
-        // origin:"http://localhost:5173",
         origin:"https://findyourperfectmatch.netlify.app",
         methods:'GET,HEAD,PUT,PATCH,POST,DELETE',
         credentials: true, // set the cookie true
