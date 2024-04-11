@@ -113,7 +113,7 @@ class OtpController {
       console.error('Error during phone number verification:', error);
       res.status(500).json({ status: 'FAILED', message: 'Internal server error' });
     }
-  }
+  };
 
   static updateMobileNumber = async (req, res) => {
     try {
@@ -151,6 +151,8 @@ class OtpController {
     }
 }
 
+
+ 
 }
 
  
