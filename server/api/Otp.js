@@ -2,6 +2,18 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+const cors = require('cors');
+
+
+router.use(cors(
+    {
+        origin:"https://findyourperfectmatch.netlify.app",
+        methods:'GET,HEAD,PUT,PATCH,POST,DELETE',
+        credentials: true, // set the cookie true
+        optionsSuccessStatus: 204     // Respond with a 204 status code for preflight requests
+    }
+));
+
 
 //getting User 
 
