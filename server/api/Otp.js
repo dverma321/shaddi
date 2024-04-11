@@ -4,6 +4,12 @@ const bodyParser = require('body-parser');
 
 const cors = require('cors');
 
+//getting User 
+
+const User = require('../model/User')
+
+const router = express.Router();
+
 
 router.use(cors(
     {
@@ -15,11 +21,7 @@ router.use(cors(
 ));
 
 
-//getting User 
 
-const User = require('../model/User')
-
-const router = express.Router();
 const otpController = require('../controller/otp.controller.js')
 
 router.post('/verify-phone', otpController.userLogin);
