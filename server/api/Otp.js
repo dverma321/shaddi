@@ -29,6 +29,8 @@ const otpController = require('../controller/otp.controller.js')
 
 router.post('/verify-phone', otpController.userLogin);
 router.post('/verify-number', otpController.loginByUsingMobileNumber);
+router.post('/update-number', Authenticate, otpController.updateMobileNumber);
+
 
 
 module.exports = router;
