@@ -114,6 +114,43 @@ class OtpController {
       res.status(500).json({ status: 'FAILED', message: 'Internal server error' });
     }
   }
+
+  static updateMobileNumber = async (req, res) => {
+    try {
+      const { phone } = req.body;
+  
+      // Validate required field
+      if (!phone) {
+        return res.status(400).json({ status: 'FAILED', message: 'Please provide a phone number' });
+      }
+  
+      // Check if user with the same phone number already exists
+      const existingUser = await User.findOne({ phone });
+  
+      if (existingUser) {
+        return res.status(400).json({ status: 'FAILED', message: 'Phone number already exists' });
+      } 
+
+      
+      const userId = req.rootUser._id;
+      console.log("Login User ID : ", userId);
+  
+      // Update the existing user's phone number
+      const updatedUser = await User.findByIdAndUpdate(userId, { phone }, { new: true });
+  
+      if (updatedUser) {
+        // Send success response with the updated user data
+        res.status(200).json({ status: 'SUCCESS', message: 'Phone number updated successfully', user: updatedUser });
+      } else {
+        // Send failure response
+        res.status(500).json({ status: 'FAILED', message: 'Error updating phone number' });
+      }
+    } catch (error) {
+      console.error('Error updating phone number:', error);
+      res.status(500).json({ status: 'FAILED', message: 'Internal server error' });
+    }
+}
+
 }
 
  
