@@ -77,6 +77,7 @@ router.post("/signup", (req, res) => {
   password = password.trim();
   confirmPassword = confirmPassword.trim();  
 
+    
   if (name === "" || email === "" || password === "" || confirmPassword === "" || gender === "" ) {
     return res.json({
       status: "FAILED",
@@ -86,7 +87,7 @@ router.post("/signup", (req, res) => {
 
   if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
     return res.json({
-      status: "FAILED",
+      status: "403",
       message: "Invalid Email Entered"
     });
   }
@@ -100,7 +101,7 @@ router.post("/signup", (req, res) => {
 
   if (password.length < 8) {
     return res.json({
-      status: "FAILED",
+      status: "402",
       message: "Password length is too short"
     });
   }
@@ -108,7 +109,7 @@ router.post("/signup", (req, res) => {
 
   if (password !== confirmPassword) {
     return res.json({
-      status: "FAILED",
+      status: "401",
       message: "Passwords do not match"
     });
   }
@@ -119,10 +120,11 @@ router.post("/signup", (req, res) => {
     .then(existingUser => {
       if (existingUser) {
         return res.json({
-          status: "FAILED",
+          status: "404",
           message: "Email Already Exists..."
         });
       }
+
 
       // password handler
       const saltRounds = 10;
