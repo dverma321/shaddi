@@ -905,7 +905,7 @@ router.post('/forgot-password', (req, res)=> {
       from: process.env.Auth_mail,
       to: email,
       subject: 'Reset your password',
-      text: `http://localhost:5173/reset-password/${user._id}/${token}`
+      text: `https://shaddi.onrender.com/reset-password/${user._id}/${token}`
     };
     
     transporter.sendMail(mailOptions, function(error, info){
