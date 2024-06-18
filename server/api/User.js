@@ -134,7 +134,7 @@ router.post("/signup", (req, res) => {
           const newUser = new User({
             name,
             email,
-            password,
+            password: hashedPassword ,
             confirmPassword: hashedPassword,
             gender,            
             verified: false,
@@ -489,12 +489,21 @@ router.post("/signin", async (req, res) => {
       });
     }
 
-    if (user.password !== password) {
-      return res.status(403).json({
-        status: "FAILED",
-        message: "Invalid credentials."
-      });
-    }
+    // if (user.password !== password) {
+    //   return res.status(403).json({
+    //     status: "FAILED",
+    //     message: "Invalid credentials."
+    //   });
+    // }
+
+        // Compare the provided password with the hashed password in the database
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        return res.status(403).json({
+          status: "FAILED",
+          message: "Invalid credentials."
+        });
+      }
 
     // Generating Token after login
 
@@ -867,6 +876,88 @@ router.post('/verify-phone_tested', async (req, res) => {
   }
 
 })
+
+// forgot password working
+
+router.post('/forgot-password', (req, res)=> {
+
+  const {email} = req.body;
+
+  User.findOne({email})
+  .then(user => {
+    if(!user)
+      {
+        return res.send({Status: "User Email is not present"})
+      }
+    const token = jwt.sign({id:user._id}, "JWT_SECRET", {expiresIn: "1d"}) // payload , secret_key, optional
+
+    // using nodemailer to send email
+
+    var transporter = nodemailer.createTransport({ 
+      service: 'gmail',
+      auth: {
+        user: process.env.Auth_mail,
+        pass: process.env.Email_pass
+      }
+    });
+    
+    var mailOptions = {
+      from: process.env.Auth_mail,
+      to: email,
+      subject: 'Reset your password',
+      text: `http://localhost:5173/reset-password/${user._id}/${token}`
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+        return res.send({Status:"Success"})
+      }
+    });
+
+  })
+  .catch((err) => {
+    console.log('Error while using forgetting password...', err)
+  })
+} )
+
+// reset password working
+
+router.post('/reset-password/:id/:token', (req, res) => {
+
+  const {password} = req.body;
+  const {id, token} = req.params; // getting it from url
+
+  jwt.verify(token, "JWT_SECRET", (err, decoded) => {
+
+    if(err)
+      {
+        return res.json({Status:'Error with token'})
+      }
+    else{
+      bcrypt.hash(password, 10)
+      .then(hash => {
+        User.findByIdAndUpdate({_id:id}, {password:hash})
+        .then(u => {
+          res.send({Status:"Success"})
+
+        })
+        .catch(err => {
+          res.send({Status:'Error'})
+        })
+      })
+      .catch(err => {
+        console.log("Internal Server Error while resetting the password")
+      })
+    }
+
+  } )
+
+  
+})
+
 
 
 module.exports = router
