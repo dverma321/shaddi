@@ -61,6 +61,20 @@ const Schema = mongoose.Schema({
             }
         }
 
+    ],
+
+     // Adding messages field to store user messages
+      messages: [
+        {
+            message: {
+                type: String,
+                required: true
+            },
+            createdAt: {
+                type: Date,
+                default: Date.now
+            }
+        }
     ]
 
 })
@@ -90,6 +104,20 @@ Schema.methods.generateAuthToken = async function () {
 
     }
 }
+
+
+// Method to add a message
+Schema.methods.addMessage = async function (message) {
+    try {
+        this.messages = this.messages.concat({ message });
+        await this.save();
+        return this.messages;
+    } catch (err) {
+        console.log("Catch Error :", err);
+        throw err;
+    }
+};
+
 
 const User = mongoose.model('UserData', Schema);
 module.exports = User
