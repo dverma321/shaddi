@@ -958,6 +958,54 @@ router.post('/reset-password/:id/:token', (req, res) => {
   
 })
 
+// contactus sending message working
+
+router.post('/contactus', async (req, res) => {
+  const { email, message } = req.body;
+
+  if (!email || !message) {
+    return res.status(400).json({ status: 'FAILURE', message: 'Email and message are required.' });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ status: 'FAILURE', message: 'User not found.' });
+    }
+
+    await user.addMessage(message);
+
+    res.status(200).json({ status: 'SUCCESS', message: 'Message sent successfully!' });
+  } catch (error) {
+    console.error('Error saving message:', error);
+    res.status(500).json({ status: 'FAILURE', message: 'Server error. Please try again later.' });
+  }
+});
+
+// contactus getting messages working
+
+router.get('/user/messages', async (req, res) => {
+  const { email } = req.query;
+
+  if (!email) {
+    return res.status(400).json({ status: 'FAILURE', message: 'Email is required.' });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ status: 'FAILURE', message: 'User not found.' });
+    }
+
+    res.status(200).json({ status: 'SUCCESS', messages: user.messages });
+  } catch (error) {
+    console.error('Error fetching messages:', error);
+    res.status(500).json({ status: 'FAILURE', message: 'Server error. Please try again later.' });
+  }
+});
+
 
 
 module.exports = router
