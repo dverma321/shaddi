@@ -27,6 +27,7 @@ const User = require('../model/User')
 
 // user verification
 const UserVerification = require('../model/UserVerification')
+const FriendRequest = require('../model/FriendRequest'); // Import the FriendRequest model
 
 // email handler
 
