@@ -75,7 +75,9 @@ const Schema = mongoose.Schema({
                 default: Date.now
             }
         }
-    ]
+    ],
+
+     friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'UserData' }],
 
 })
 
