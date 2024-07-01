@@ -27,8 +27,11 @@ app.use(cookieParser());
 // Routes
 const userRouter = require('./api/User');
 const otpRouter = require('./api/Otp.js'); 
+const friendrequest = require('./api/Friend_request.js');
+
 app.use('/user', userRouter);
-app.use('/otp', otpRouter); 
+app.use('/otp', otpRouter);
+app.use('/friend', friendrequest); 
 
 // Error handling middleware
 app.use((err, req, res, next) => {
