@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken'); // Import jsonwebtoken
 
 const Schema = mongoose.Schema({
     name: String,
+    uname: String,
     email: String,
     password: String,
     confirmPassword: String,
