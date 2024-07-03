@@ -14,21 +14,23 @@ const router = express.Router()
 const User = require('../model/User')
 const FriendRequest = require('../model/FriendRequest'); // Import the FriendRequest model
 
-// Accept a friend request
 
-router.post('/accept-request', authenticate, async (req, res) => {
+  // Friend request code
+
+  router.post('/accept-request', authenticate, async (req, res) => {
     const { requestId } = req.body;
+  
     try {
       const request = await FriendRequest.findById(requestId);
       if (!request) {
-        return res.status(404).json({ message: 'Request not found' });
+        return res.status(404).json({ message: 'Friend request not found' });
       }
   
-      const sender = await UserData.findById(request.sender);
-      const recipient = await UserData.findById(request.recipient);
+      const sender = await User.findById(request.sender);
+      const recipient = await User.findById(request.recipient);
   
       if (!sender || !recipient) {
-        return res.status(404).json({ message: 'User not found' });
+        return res.status(404).json({ message: 'Sender or recipient not found' });
       }
   
       // Add each other as friends
@@ -44,9 +46,12 @@ router.post('/accept-request', authenticate, async (req, res) => {
   
       res.status(200).json({ message: 'Friend request accepted' });
     } catch (error) {
-      res.status(500).json({ message: 'Error accepting friend request', error });
+      console.error('Error accepting friend request:', error);
+      res.status(500).json({ message: 'Error accepting friend request', error: error.message });
     }
   });
+  
+
   
 
   // Reject friend request
@@ -82,8 +87,44 @@ router.post('/reject-request', authenticate, async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     }
   });
+
   
-  
+// Send friend request
+
+router.post('/send-request', authenticate, async (req, res) => {
+  const { senderId, recipientId, imageUrl  } = req.body;
+  try {
+
+    // Validate required fields are present
+  if (!senderId || !recipientId || !imageUrl ) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+
+    const newRequest = new FriendRequest({
+      sender: senderId,
+      recipient: recipientId,
+      imageUrl: imageUrl  // Use senderImageUrl here
+    });
+    await newRequest.save();
+    res.status(200).json({ message: 'Request sent successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error sending request', error });
+  }
+});
+
+
+
+// Get friend requests for logged-in user working
+router.get('/requests/:userId', authenticate, async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const requests = await FriendRequest.find({ recipient: userId, status: 'pending' })
+      .populate('sender', 'name');
+    res.status(200).json(requests);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching requests', error });
+  }
+}); 
 
 
 
