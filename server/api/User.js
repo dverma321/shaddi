@@ -462,7 +462,7 @@ router.get("/verified", (req, res) => {
 
 // Testing purpose signin
 
-router.post("/signin", async (req, res) => {
+router.post("/signin_email", async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -537,6 +537,77 @@ router.post("/signin", async (req, res) => {
     });
   }
 });
+
+
+router.post("/signin", async (req, res) => {
+  const { uname, password } = req.body;
+
+  if (!uname || !password) {
+    return res.status(400).json({
+      status: "FAILED",
+      message: "Username and password are required."
+    });
+  }
+
+  try {
+    const user = await User.findOne({ uname });
+    if (!user) {
+      return res.status(401).json({
+        status: "FAILED",
+        message: "Username is not registered."
+      });
+    }
+
+    // Check if user is verified
+    
+    if (!user.verified) {
+      return res.status(402).json({
+        status: "FAILED",
+        message: "User is not verified. Please verify your account."
+      });
+    }
+
+      // Compare the provided password with the hashed password in the database
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        return res.status(403).json({
+          status: "FAILED",
+          message: "Invalid credentials."
+        });
+      }
+
+    // Generating Token after login
+
+    const token = await user.generateAuthToken();
+    console.log("Retrieve Token from database: ", token);
+
+    // storing token in the cookie
+
+    res.cookie("jwtoken", token, {
+      expires: new Date(Date.now() + 25892000000),
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      path: '/',
+      credentials: 'include'
+    });
+
+
+    res.status(200).json({
+      status: "SUCCESS",
+      message: "Login successful.",
+      token,
+      userId: user._id
+    });
+  } catch (error) {
+    console.error('Error during login:', error);
+    res.status(500).json({
+      status: "FAILED",
+      message: "An error occurred during login."
+    });
+  }
+});
+
 
 
 // Logout route
