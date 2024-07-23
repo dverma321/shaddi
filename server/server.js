@@ -45,7 +45,7 @@ const messageRouter = require('./api/MessageRoutes.js');
 app.use('/user', userRouter);
 app.use('/otp', otpRouter);
 app.use('/friend', friendrequest);
-app.use('/admin', admin_route);
+// app.use('/admin', admin_route);
 app.use('/paypal', paypalRouter);
 app.use('/api', messageRouter); // Use message routes
 
