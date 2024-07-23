@@ -37,7 +37,7 @@ const Message = require('./model/Message.js');
 
 const userRouter = require('./api/User');
 const otpRouter = require('./api/Otp.js');
-const admin_route = require('./api/Admin.js');
+// const admin_route = require('./api/Admin.js');
 const friendrequest = require('./api/Friend_request.js');
 const paypalRouter = require('./api/PaypalRoute.js');
 const messageRouter = require('./api/MessageRoutes.js');
